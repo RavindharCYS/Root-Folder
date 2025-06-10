@@ -27,6 +27,57 @@
     
     <!-- Flatpickr for Date Picker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- ========== CSS FIXES & UPDATES for BOOKING PAGE ========== -->
+    <style>
+      .page-header { padding: 6rem 0; text-align: center; }
+      .page-title { color: var(--white); font-size: 3.5rem; }
+      .page-description { color: rgba(255,255,255,0.9); font-size: 1.25rem; max-width: 800px; margin: 1rem auto 0; }
+      
+      .booking-section { margin-top: -80px; position: relative; z-index: 5; }
+      .booking-container { background: var(--white); padding: 3rem; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-xl); }
+      .booking-steps { display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative; }
+      .booking-steps::before { content: ''; position: absolute; top: 20px; left: 15%; right: 15%; height: 2px; background: var(--medium-gray); z-index: 1; }
+      .booking-step { flex: 1; text-align: center; position: relative; z-index: 2; }
+      .step-number { width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; background: var(--medium-gray); color: var(--gray); transition: all 0.3s ease; }
+      .step-number.active { background: var(--primary-color); color: var(--white); transform: scale(1.1); }
+      .step-number.completed { background: var(--accent-green); color: var(--white); }
+      .step-label { font-weight: 600; color: var(--gray); }
+      .step-label.active, .step-label.completed { color: var(--secondary-dark); }
+      
+      .booking-form-step { display: none; }
+      .booking-form-step.active { display: block; animation: fadeIn 0.5s ease; }
+      .booking-form-step h3 { text-align: center; margin-bottom: 0.5rem; }
+      .booking-form-step .step-description { text-align: center; color: var(--gray); margin-bottom: 2rem; }
+
+      /* DESIGN UPDATE for Service Options Icons */
+      .service-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+      .service-option { border: 2px solid var(--medium-gray); padding: 1.5rem; border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; }
+      .service-option:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+      .service-option.selected { border-color: var(--primary-color); background: #fff8f6; }
+      .service-icon-wrapper { position: relative; width: 70px; height: 70px; margin: 0 auto 1.5rem; }
+      .service-option .service-icon { width: 70px; height: 70px; background-color: var(--primary-color); color: var(--white); border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; position: relative; z-index: 2; }
+      .service-option .service-icon-bg { position: absolute; top: -6px; left: 6px; width: 70px; height: 70px; border-radius: var(--border-radius-md); background: var(--primary-light); opacity: 0.3; transition: all .3s ease; z-index: 1; }
+      .service-option:hover .service-icon-bg { transform: translate(4px, -4px); }
+      /* END DESIGN UPDATE */
+
+      .flatpickr-input { text-align: center; font-size: 1.2rem; }
+      .time-slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+      .time-slot { border: 1px solid var(--medium-gray); padding: 0.75rem; border-radius: var(--border-radius-sm); text-align: center; cursor: pointer; transition: all 0.2s ease; }
+      .time-slot:hover { background: var(--light-gray); }
+      .time-slot.selected { background: var(--primary-color); color: var(--white); border-color: var(--primary-color); }
+
+      .booking-navigation { display: flex; justify-content: space-between; margin-top: 2rem; }
+      .booking-navigation .btn { min-width: 150px; }
+      .form-group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .form-group input.error { border-color: #dc3545; }
+        
+      .success-message { text-align: center; padding: 2rem 0; }
+      .success-icon { font-size: 5rem; color: var(--accent-green); margin-bottom: 1.5rem; }
+      .booking-details { background: var(--light-gray); padding: 1.5rem; margin: 2rem 0; border-radius: var(--border-radius-md); text-align: left; max-width: 400px; margin-left:auto; margin-right: auto;}
+      
+      @media (max-width: 767px) { .booking-steps::before { display: none; } .form-group-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
     
@@ -111,14 +162,14 @@
                             <h3>What service are you interested in?</h3>
                             <p class="step-description">This helps us assign the right expert for your consultation.</p>
                             <div class="service-options">
-                                <div class="service-option" data-service="SEO Strategy" data-value="seo"><div class="service-icon"><i class="fas fa-search"></i></div><h4>SEO Strategy</h4></div>
-                                <div class="service-option" data-service="PPC Advertising" data-value="ppc"><div class="service-icon"><i class="fas fa-ad"></i></div><h4>PPC Advertising</h4></div>
-                                <div class="service-option" data-service="Web Development" data-value="web"><div class="service-icon"><i class="fas fa-code"></i></div><h4>Web Development</h4></div>
-                                <div class="service-option" data-service="Cyber Security" data-value="security"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><h4>Cyber Security</h4></div>
-                                <div class="service-option" data-service="Full Digital Strategy" data-value="all"><div class="service-icon"><i class="fas fa-cube"></i></div><h4>Full Digital Strategy</h4></div>
+                                <div class="service-option" data-service="SEO Strategy" data-value="seo"><div class="service-icon-wrapper"><div class="service-icon"><i class="fas fa-search"></i></div><div class="service-icon-bg"></div></div><h4>SEO Strategy</h4></div>
+                                <div class="service-option" data-service="PPC Advertising" data-value="ppc"><div class="service-icon-wrapper"><div class="service-icon"><i class="fas fa-ad"></i></div><div class="service-icon-bg"></div></div><h4>PPC Advertising</h4></div>
+                                <div class="service-option" data-service="Web Development" data-value="web"><div class="service-icon-wrapper"><div class="service-icon"><i class="fas fa-code"></i></div><div class="service-icon-bg"></div></div><h4>Web Development</h4></div>
+                                <div class="service-option" data-service="Cyber Security" data-value="security"><div class="service-icon-wrapper"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><div class="service-icon-bg"></div></div><h4>Cyber Security</h4></div>
+                                <div class="service-option" data-service="Full Digital Strategy" data-value="all"><div class="service-icon-wrapper"><div class="service-icon"><i class="fas fa-cube"></i></div><div class="service-icon-bg"></div></div><h4>Full Digital Strategy</h4></div>
                             </div>
                             <input type="hidden" id="selectedService" name="service" required>
-                            <div class="booking-navigation"><button type="button" class="btn btn-primary next-step" disabled>Continue <i class="fas fa-arrow-right"></i></button></div>
+                            <div class="booking-navigation" style="justify-content: flex-end;"><button type="button" class="btn btn-primary next-step" disabled>Continue <i class="fas fa-arrow-right"></i></button></div>
                         </div>
                         
                         <!-- Step 2: Choose Date & Time -->
@@ -193,21 +244,13 @@
 
         const initPreloader = () => {
             const preloader = document.getElementById('preloader');
-            if (preloader) {
-                window.addEventListener('load', () => {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => preloader.style.display = 'none', 500);
-                });
-            }
+            if (preloader) window.addEventListener('load', () => { preloader.style.opacity = '0'; setTimeout(() => preloader.style.display = 'none', 500); });
         };
 
         const initNavigationAndScroll = () => {
             const header = document.getElementById('header');
-            const navToggle = document.getElementById('navToggle');
-            const navMenu = document.getElementById('navMenu');
-            const scrollTopBtn = document.getElementById('scrollToTop');
             if (!header) return;
-
+            const navToggle = document.getElementById('navToggle'), navMenu = document.getElementById('navMenu'), scrollTopBtn = document.getElementById('scrollToTop');
             let isTicking = false;
             const handleScroll = () => {
                 header.classList.toggle('scrolled', window.scrollY > 50);
@@ -215,8 +258,8 @@
                 isTicking = false;
             };
             window.addEventListener('scroll', () => { if (!isTicking) { window.requestAnimationFrame(handleScroll); isTicking = true; } });
-            if (navToggle && navMenu) { navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); navToggle.classList.toggle('active'); document.body.classList.toggle('no-scroll'); }); }
-            if (scrollTopBtn) { scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); }
+            if (navToggle && navMenu) navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); navToggle.classList.toggle('active'); document.body.classList.toggle('no-scroll'); });
+            if (scrollTopBtn) scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
         };
 
         const initBookingForm = () => {
@@ -230,22 +273,22 @@
             const goToStep = (stepNumber) => {
                 steps.forEach(s => s.classList.remove('active'));
                 form.querySelector(`#step${stepNumber}`).classList.add('active');
-
                 stepIndicators.forEach(ind => {
-                    ind.querySelector('.step-number').classList.remove('active', 'completed');
-                    ind.querySelector('.step-label').classList.remove('active', 'completed');
-                    if(ind.dataset.stepId < stepNumber) {
-                        ind.querySelector('.step-number').classList.add('completed');
-                        ind.querySelector('.step-label').classList.add('completed');
+                    const numEl = ind.querySelector('.step-number');
+                    const labelEl = ind.querySelector('.step-label');
+                    numEl.classList.remove('active', 'completed');
+                    labelEl.classList.remove('active', 'completed');
+                    if (ind.dataset.stepId < stepNumber) {
+                        numEl.classList.add('completed');
+                        labelEl.classList.add('completed');
                     } else if (ind.dataset.stepId == stepNumber) {
-                        ind.querySelector('.step-number').classList.add('active');
-                        ind.querySelector('.step-label').classList.add('active');
+                        numEl.classList.add('active');
+                        labelEl.classList.add('active');
                     }
                 });
                 currentStep = stepNumber;
             };
 
-            // Step 1: Service Selection
             const serviceOptions = form.querySelector('.service-options');
             serviceOptions.addEventListener('click', e => {
                 const target = e.target.closest('.service-option');
@@ -256,14 +299,12 @@
                 form.querySelector('#step1 .next-step').disabled = false;
             });
             
-            // Step 2: Date & Time
             flatpickr("#datepicker", {
                 minDate: "today",
                 disable: [(date) => (date.getDay() === 0 || date.getDay() === 6)],
-                onChange: (selectedDates, dateStr) => {
-                    const timeSlotsContainer = form.querySelector('#timeSlots');
-                    const slots = ["9:00 AM", "10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM"];
-                    timeSlotsContainer.innerHTML = slots.map(slot => `<button type="button" class="time-slot">${slot}</button>`).join('');
+                onChange: () => {
+                    const slots = ["9:00 AM", "10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM", "4:00 PM"];
+                    form.querySelector('#timeSlots').innerHTML = slots.map(slot => `<button type="button" class="time-slot">${slot}</button>`).join('');
                     form.querySelector('#selectedTime').value = '';
                     form.querySelector('#step2 .next-step').disabled = true;
                 }
@@ -278,95 +319,39 @@
                 form.querySelector('#step2 .next-step').disabled = false;
             });
             
-            // Navigation
             form.addEventListener('click', e => {
-                if (e.target.matches('.next-step')) goToStep(currentStep + 1);
-                if (e.target.matches('.prev-step')) goToStep(currentStep - 1);
+                if (e.target.closest('.next-step')) goToStep(currentStep + 1);
+                if (e.target.closest('.prev-step')) goToStep(currentStep - 1);
             });
             
-            // Form Submission
             form.addEventListener('submit', e => {
                 e.preventDefault();
                 let isValid = true;
                 form.querySelectorAll('#step3 [required]').forEach(input => {
                     input.classList.remove('error');
-                    if (!input.value.trim()) {
+                    if (!input.value.trim() || (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value))) {
                         isValid = false;
                         input.classList.add('error');
                     }
                 });
 
                 if (isValid) {
-                    const serviceText = serviceOptions.querySelector('.selected').dataset.service;
-                    const dateTimeText = `${form.querySelector('#datepicker').value} at ${form.querySelector('#selectedTime').value}`;
-                    form.querySelector('#confirmService').textContent = serviceText;
-                    form.querySelector('#confirmDateTime').textContent = dateTimeText;
+                    form.querySelector('#confirmService').textContent = serviceOptions.querySelector('.selected')?.dataset.service || 'N/A';
+                    form.querySelector('#confirmDateTime').textContent = `${form.querySelector('#datepicker').value} at ${form.querySelector('#selectedTime').value}`;
                     goToStep(4);
                 }
             });
         };
 
         const initCookieConsent = () => {
-            const banner = document.getElementById('cookieConsent');
-            const acceptBtn = document.getElementById('cookieAccept');
-            if (banner && acceptBtn && !localStorage.getItem('cookiesAccepted')) {
-                setTimeout(() => banner.classList.add('active'), 2000);
-            }
-            if (acceptBtn) { acceptBtn.addEventListener('click', () => { localStorage.setItem('cookiesAccepted', 'true'); banner.classList.remove('active'); }); }
+            const banner = document.getElementById('cookieConsent'), btn = document.getElementById('cookieAccept');
+            if(banner && btn && !localStorage.getItem('cookiesAccepted')) setTimeout(()=>banner.classList.add('active'), 2000);
+            if(btn) btn.addEventListener('click', ()=>{localStorage.setItem('cookiesAccepted','true'); banner.classList.remove('active');});
         };
 
-        const initFooter = () => {
-            const yearSpan = document.getElementById('currentYear');
-            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-        };
+        const initFooter = () => { document.getElementById('currentYear').textContent = new Date().getFullYear(); };
     })();
     </script>
-
-    <style>
-        .page-header { padding: 6rem 0; text-align: center; }
-        .page-title { color: var(--white); font-size: 3.5rem; }
-        .page-description { color: rgba(255,255,255,0.9); font-size: 1.25rem; max-width: 800px; margin: 1rem auto 0; }
-        
-        .booking-section { margin-top: -80px; position: relative; z-index: 5; }
-        .booking-container { background: var(--white); padding: 3rem; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-xl); }
-        .booking-steps { display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative; }
-        .booking-steps::before { content: ''; position: absolute; top: 20px; left: 15%; right: 15%; height: 2px; background: var(--medium-gray); z-index: 1; }
-        .booking-step { flex: 1; text-align: center; position: relative; z-index: 2; }
-        .step-number { width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; background: var(--medium-gray); color: var(--gray); transition: all 0.3s ease; }
-        .step-number.active { background: var(--primary-color); color: var(--white); transform: scale(1.1); }
-        .step-number.completed { background: var(--accent-green); color: var(--white); }
-        .step-label { font-weight: 600; color: var(--gray); }
-        .step-label.active, .step-label.completed { color: var(--secondary-dark); }
-        
-        .booking-form-step { display: none; }
-        .booking-form-step.active { display: block; animation: fadeIn 0.5s ease; }
-        .booking-form-step h3 { text-align: center; margin-bottom: 0.5rem; }
-        .booking-form-step .step-description { text-align: center; color: var(--gray); margin-bottom: 2rem; }
-
-        .service-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
-        .service-option { border: 2px solid var(--medium-gray); padding: 1.5rem; border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; }
-        .service-option .service-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
-        .service-option:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-        .service-option.selected { border-color: var(--primary-color); background: #fff8f6; }
-
-        .flatpickr-input { text-align: center; font-size: 1.2rem; }
-        .time-slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
-        .time-slot { border: 1px solid var(--medium-gray); padding: 0.75rem; border-radius: var(--border-radius-sm); text-align: center; cursor: pointer; transition: all 0.2s ease; }
-        .time-slot:hover { background: var(--light-gray); }
-        .time-slot.selected { background: var(--primary-color); color: var(--white); border-color: var(--primary-color); }
-
-        .booking-navigation { display: flex; justify-content: space-between; margin-top: 2rem; }
-        .booking-navigation .btn { min-width: 150px; }
-
-        .form-group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .form-group input.error { border-color: #dc3545; }
-        
-        .success-message { text-align: center; padding: 2rem 0; }
-        .success-icon { font-size: 5rem; color: var(--accent-green); margin-bottom: 1.5rem; }
-        .booking-details { background: var(--light-gray); padding: 1.5rem; margin: 2rem 0; border-radius: var(--border-radius-md); text-align: left; max-width: 400px; margin-left:auto; margin-right: auto;}
-        
-        @media (max-width: 767px) { .booking-steps::before { display: none; } .form-group-grid { grid-template-columns: 1fr; } }
-    </style>
 
 </body>
 </html>
