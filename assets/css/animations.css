@@ -1464,13 +1464,7 @@ html, body {
     }
 
     /* Optimize performance by reducing animation complexity */
-    .animate-pulse,
-    .animate-wave,
-    .animate-glow {
-        /* Keep pulse for preloader or specific important elements if needed,
-           otherwise disable for general elements. */
-        /* animation: none; */
-    }
+    /* .animate-pulse, .animate-wave, .animate-glow { } -- removed empty ruleset */
 }
 
 /* Animation Preferences - Respect user preferences */
