@@ -81,10 +81,10 @@
         <section class="page-hero section-padding">
             <div class="container">
                 <div class="page-hero-content text-center">
-                    <h1 class="page-title">
+                    <h1 class="page-title animate-fade-up">
                         Join Our <span class="text-gradient">Team</span>
                     </h1>
-                    <p class="page-description">
+                    <p class="page-description animate-fade-up-delay">
                         Build your career at Halora Global and be part of a team that's transforming digital experiences
                     </p>
                 </div>
@@ -92,7 +92,7 @@
         </section>
 
         <!-- Current Openings Section -->
-        <section class="careers-openings section-padding bg-light">
+        <section id="current-openings" class="careers-openings section-padding bg-light">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Current Opportunities</span>
@@ -104,7 +104,7 @@
                     </p>
                 </div>
 
-                <div class="no-openings-container text-center">
+                <div class="no-openings-container text-center animate-on-scroll">
                     <div class="no-openings-icon">
                         <i class="fas fa-briefcase"></i>
                     </div>
@@ -112,7 +112,7 @@
                     <p>We don't have any open positions at the moment, but we're always looking for talented individuals to join our team. Check back soon for new opportunities, or send us your resume for future consideration.</p>
 
                     <div class="careers-cta">
-                        <a href="#future-application" class="btn btn-primary btn-lg">
+                        <a href="#future-application" class="btn btn-primary btn-lg scroll-to">
                             Submit for Future Consideration
                             <i class="fas fa-paper-plane"></i>
                         </a>
@@ -122,7 +122,7 @@
         </section>
 
         <!-- Why Join Us Section -->
-        <section class="why-join-us section-padding">
+        <section id="why-join-us" class="why-join-us section-padding">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Why Choose Us</span>
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="benefits-grid">
-                    <div class="benefit-card" data-aos="fade-up">
+                    <div class="benefit-card animate-on-scroll">
                         <div class="benefit-icon">
                             <i class="fas fa-rocket"></i>
                         </div>
@@ -143,7 +143,7 @@
                         <p>Continuous learning opportunities and clear advancement paths for your professional development</p>
                     </div>
 
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="benefit-card animate-on-scroll">
                         <div class="benefit-icon">
                             <i class="fas fa-laptop-code"></i>
                         </div>
@@ -151,7 +151,7 @@
                         <p>Work with the latest technologies and tools in the digital marketing and tech industry</p>
                     </div>
 
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="benefit-card animate-on-scroll">
                         <div class="benefit-icon">
                             <i class="fas fa-heart"></i>
                         </div>
@@ -159,7 +159,7 @@
                         <p>Flexible work arrangements and policies that respect your personal time and wellbeing</p>
                     </div>
 
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="benefit-card animate-on-scroll">
                         <div class="benefit-icon">
                             <i class="fas fa-hand-holding-medical"></i>
                         </div>
@@ -167,7 +167,7 @@
                         <p>Competitive salary, health insurance, retirement plans, and additional perks</p>
                     </div>
 
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="benefit-card animate-on-scroll">
                         <div class="benefit-icon">
                             <i class="fas fa-users"></i>
                         </div>
@@ -175,7 +175,7 @@
                         <p>Work alongside talented professionals in a supportive and inclusive environment</p>
                     </div>
 
-                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="benefit-card animate-on-scroll">
                         <div class="benefit-icon">
                             <i class="fas fa-globe"></i>
                         </div>
@@ -199,7 +199,7 @@
                     </p>
                 </div>
 
-                <div class="contact-form-wrapper">
+                <div class="contact-form-wrapper animate-on-scroll">
                     <form id="careerForm" class="contact-form" action="#" method="POST">
                         <div class="form-group">
                             <label for="name">Full Name</label>
@@ -246,6 +246,30 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career Navigation Section -->
+        <section class="career-navigation section-padding">
+            <div class="container">
+                <div class="navigation-grid">
+                    <a href="#current-openings" class="navigation-card scroll-to">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Current Openings</span>
+                    </a>
+                    <a href="#why-join-us" class="navigation-card scroll-to">
+                        <i class="fas fa-star"></i>
+                        <span>Why Join Us</span>
+                    </a>
+                    <a href="#future-application" class="navigation-card scroll-to">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Submit Application</span>
+                    </a>
+                    <a href="#header" class="navigation-card scroll-to">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>Back to Top</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -358,11 +382,456 @@
         </div>
     </div>
 
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-bar"></div>
+
     <!-- JavaScript Files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/animations.js"></script>
     <script src="../assets/js/form-validation.js"></script>
 
+    <!-- Custom Scroll Enhancement Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Enhance all scroll-to links with smooth scrolling
+            document.querySelectorAll('.scroll-to').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        // Get header height for offset
+                        const header = document.querySelector('header') || document.getElementById('header');
+                        const headerHeight = header ? header.offsetHeight : 0;
+                        const additionalOffset = 20; // Extra space
+                        
+                        // Calculate target position with offset
+                        const targetPosition = targetElement.getBoundingClientRect().top + 
+                                            window.pageYOffset - 
+                                            headerHeight - 
+                                            additionalOffset;
+                        
+                        // Smooth scroll with animation
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update URL hash without jumping
+                        history.pushState(null, null, targetId);
+                    }
+                });
+            });
+
+            // Scroll spy functionality to highlight active sections
+            function updateActiveSection() {
+                const sections = document.querySelectorAll('section[id]');
+                const scrollPosition = window.scrollY + 200; // Offset for better highlighting
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        // Find and update navigation links
+                        document.querySelectorAll('.navigation-card').forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === '#' + sectionId) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }
+
+                        // Handle scroll to hash on page load
+                        function scrollToHashOnLoad() {
+                if (window.location.hash) {
+                    const targetElement = document.querySelector(window.location.hash);
+                    if (targetElement) {
+                        // Delay scrolling slightly to ensure page is fully loaded
+                        setTimeout(() => {
+                            // Get header height for offset
+                            const header = document.querySelector('header') || document.getElementById('header');
+                            const headerHeight = header ? header.offsetHeight : 0;
+                            const additionalOffset = 20;
+                            
+                            // Calculate target position with offset
+                            const targetPosition = targetElement.getBoundingClientRect().top + 
+                                                window.pageYOffset - 
+                                                headerHeight - 
+                                                additionalOffset;
+                            
+                            // Smooth scroll to the target
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }, 300);
+                    }
+                }
+            }
+            
+            // Initialize scroll to hash functionality
+            scrollToHashOnLoad();
+            
+            // Throttled scroll event handler
+            let isScrolling = false;
+            window.addEventListener('scroll', function() {
+                if (!isScrolling) {
+                    window.requestAnimationFrame(function() {
+                        updateActiveSection();
+                        isScrolling = false;
+                    });
+                    isScrolling = true;
+                }
+            });
+            
+            // Form scroll focus handling
+            const formInputs = document.querySelectorAll('#careerForm input, #careerForm textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    // Check if we're on mobile, where keyboard might push content
+                    if (window.innerWidth < 768) {
+                        // Add a small delay to account for keyboard appearance
+                        setTimeout(() => {
+                            // Get the input's position
+                            const inputRect = this.getBoundingClientRect();
+                            // If input is too close to the top (might be hidden by keyboard),
+                            // scroll to better position it
+                            if (inputRect.top < 150) {
+                                window.scrollBy({
+                                    top: inputRect.top - 150,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }, 300);
+                    }
+                });
+            });
+            
+            // Handle file input accessibility
+            const fileInput = document.getElementById('resume');
+            if (fileInput) {
+                fileInput.addEventListener('change', function() {
+                    // Show file name for better UX
+                    if (this.files.length > 0) {
+                        const fileName = this.files[0].name;
+                        const fileSize = Math.round(this.files[0].size / 1024); // KB
+                        
+                        // Create or update file info display
+                        let fileInfo = this.nextElementSibling;
+                        if (fileInfo && fileInfo.classList.contains('file-info')) {
+                            fileInfo.textContent = `Selected: ${fileName} (${fileSize}KB)`;
+                        } else {
+                            fileInfo = document.createElement('div');
+                            fileInfo.className = 'file-info';
+                            fileInfo.textContent = `Selected: ${fileName} (${fileSize}KB)`;
+                            this.parentNode.insertBefore(fileInfo, this.nextElementSibling);
+                        }
+                        
+                        // Validate file size (max 5MB)
+                        if (fileSize > 5120) { // 5MB in KB
+                            fileInfo.classList.add('error');
+                            fileInfo.textContent += ' - File too large (max 5MB)';
+                        } else {
+                            fileInfo.classList.remove('error');
+                        }
+                    }
+                });
+            }
+            
+            // Custom scroll progress indicator
+            function updateScrollProgress() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                if (height > 0) { // Prevent division by zero
+                    const scrolled = (winScroll / height) * 100;
+                    document.querySelector('.scroll-progress-bar').style.width = scrolled + '%';
+                    
+                    // Show/hide the scroll progress bar
+                    if (scrolled > 0 && scrolled < 100) {
+                        document.querySelector('.scroll-progress-bar').classList.add('active');
+                    } else {
+                        document.querySelector('.scroll-progress-bar').classList.remove('active');
+                    }
+                    
+                    // Show/hide scroll to top button based on scroll position
+                    if (winScroll > 500) {
+                        document.getElementById('scrollToTop').classList.add('active');
+                    } else {
+                        document.getElementById('scrollToTop').classList.remove('active');
+                    }
+                }
+            }
+            
+            // Add scroll progress to the scroll handler
+            window.addEventListener('scroll', function() {
+                if (!isScrolling) {
+                    window.requestAnimationFrame(function() {
+                        updateScrollProgress();
+                        isScrolling = false;
+                    });
+                    isScrolling = true;
+                }
+            });
+            
+            // Initialize scroll progress on page load
+            updateScrollProgress();
+            
+            // Scroll to top button functionality
+            document.getElementById('scrollToTop').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Intersection Observer for scroll animations
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated', 'visible');
+                        observer.unobserve(entry.target);
+                        
+                        // If it's a benefit card, add staggered animation
+                        if (entry.target.classList.contains('benefit-card')) {
+                            const index = Array.from(document.querySelectorAll('.benefit-card')).indexOf(entry.target);
+                            entry.target.style.animationDelay = `${index * 0.1}s`;
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe each animated element
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Custom section-specific animations
+            function initSectionAnimations() {
+                // Career navigation sticky behavior on scroll
+                const careerNav = document.querySelector('.career-navigation');
+                if (careerNav) {
+                    const navOffsetTop = careerNav.offsetTop;
+                    
+                    function updateNavSticky() {
+                        if (window.pageYOffset > navOffsetTop) {
+                            careerNav.classList.add('sticky');
+                        } else {
+                            careerNav.classList.remove('sticky');
+                        }
+                    }
+                    
+                    // Add to scroll handler
+                    window.addEventListener('scroll', function() {
+                        updateNavSticky();
+                    });
+                    
+                    // Initial check
+                    updateNavSticky();
+                }
+                
+                // Form scroll into view when clicking the apply button
+                const applyButtons = document.querySelectorAll('a[href="#future-application"]');
+                applyButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const formSection = document.getElementById('future-application');
+                        const formElement = document.getElementById('careerForm');
+                        
+                        if (formSection && formElement) {
+                            // Scroll to form section first
+                            const header = document.querySelector('header');
+                            const headerHeight = header ? header.offsetHeight : 0;
+                            
+                            const targetPosition = formSection.getBoundingClientRect().top + 
+                                                window.pageYOffset - 
+                                                headerHeight - 
+                                                20;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Focus on first form input after scrolling
+                            setTimeout(() => {
+                                const firstInput = formElement.querySelector('input[type="text"]');
+                                if (firstInput) {
+                                    firstInput.focus();
+                                }
+                            }, 800);
+                        }
+                    });
+                });
+            }
+            
+            // Initialize section-specific animations
+            initSectionAnimations();
+            
+            // Handle back/forward browser navigation to ensure correct scrolling
+            window.addEventListener('popstate', function() {
+                if (window.location.hash) {
+                    scrollToHashOnLoad();
+                }
+            });
+            
+            // Add smooth scrolling to all anchor links within the page
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                if (!anchor.classList.contains('scroll-to')) { // Skip if already handled
+                    anchor.addEventListener('click', function(e) {
+                        const targetId = this.getAttribute('href');
+                        
+                        // Skip empty anchors and JavaScript handlers
+                        if (targetId === '#' || targetId.startsWith('javascript:')) {
+                            return;
+                        }
+                        
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            e.preventDefault();
+                            
+                            const header = document.querySelector('header');
+                            const headerHeight = header ? header.offsetHeight : 0;
+                            
+                            const targetPosition = targetElement.getBoundingClientRect().top + 
+                                                window.pageYOffset - 
+                                                headerHeight - 
+                                                20;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Update URL without jumping
+                            history.pushState(null, null, targetId);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Style for new elements -->
+    <style>
+        /* Career Navigation Styles */
+        .career-navigation {
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            z-index: 98;
+        }
+        
+        .career-navigation.sticky {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+        }
+        
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        
+        .navigation-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius-md);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .navigation-card i {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .navigation-card span {
+            font-weight: 500;
+            color: var(--secondary-color);
+        }
+        
+        .navigation-card:hover, .navigation-card.active {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .navigation-card:hover i, .navigation-card:hover span,
+        .navigation-card.active i, .navigation-card.active span {
+            color: var(--white);
+        }
+        
+        /* File input styling */
+        .file-info {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+        
+        .file-info.error {
+            color: #dc3545;
+        }
+        
+        /* Scroll progress bar active state */
+        .scroll-progress-bar.active {
+            opacity: 1;
+        }
+        
+        /* Animation for scroll indicator */
+        @keyframes scrollIndicator {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 767px) {
+            .navigation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .navigation-card {
+                padding: 0.75rem;
+            }
+            
+            .navigation-card i {
+                font-size: 1.25rem;
+            }
+            
+            .navigation-card span {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
 </body>
 </html>
