@@ -27,454 +27,6 @@
     
     <!-- Flatpickr for Date Picker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    
-    <!-- Additional CSS for navbar fix and booking styles -->
-    <style>
-        /* Navbar height fix - high specificity */
-        body .header .navbar {
-            padding: 0.5rem 0 !important;
-        }
-
-        body .header.scrolled .navbar {
-            padding: 0.4rem 0 !important;
-        }
-
-        body .header .nav-wrapper {
-            height: auto !important;
-            min-height: 60px !important;
-        }
-
-        /* Center the navigation on desktop only */
-        @media (min-width: 992px) {
-            body .header .nav-list {
-                position: absolute !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
-                margin-left: 0 !important;
-            }
-        }
-
-        /* Adjust page header top padding to match navbar height */
-        body .page-header {
-            padding-top: 120px !important;
-        }
-
-        @media (max-width: 991px) {
-            body .page-header {
-                padding-top: 100px !important;
-            }
-            
-            /* Reset navigation centering on mobile */
-            body .header .nav-list {
-                position: static !important;
-                transform: none !important;
-                margin: 0 !important;
-            }
-        }
-
-        @media (max-width: 767px) {
-            body .page-header {
-                padding-top: 90px !important;
-            }
-        }
-
-        @media (max-width: 575px) {
-            body .page-header {
-                padding-top: 80px !important;
-            }
-            
-            /* Smaller logo for mobile */
-            body .header .logo-img {
-                height: 24px !important;
-            }
-        }
-        
-        /* Booking form styles */
-        .booking-container {
-            background-color: var(--white);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-lg);
-            padding: 3rem;
-            margin-top: -100px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .booking-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2.5rem;
-            position: relative;
-        }
-        
-        .booking-steps::after {
-            content: '';
-            position: absolute;
-            top: 29px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: #e9ecef;
-            z-index: 1;
-        }
-        
-        .booking-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 33.333%;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .step-number {
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            background-color: #e9ecef;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--gray);
-            margin-bottom: 0.75rem;
-            font-size: 1.5rem;
-        }
-        
-        .step-number.active {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-        
-        .step-number.completed {
-            background-color: var(--accent-green);
-            color: var(--white);
-        }
-        
-        .step-label {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--gray);
-            text-align: center;
-        }
-        
-        .step-label.active {
-            color: var(--primary-color);
-        }
-        
-        .step-label.completed {
-            color: var(--accent-green);
-        }
-        
-        .booking-form-step {
-            display: none;
-        }
-        
-        .booking-form-step.active {
-            display: block;
-        }
-        
-        .step-description {
-            margin-bottom: 2rem;
-            color: var(--gray);
-        }
-        
-        .service-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .service-option {
-            border: 1px solid #e9ecef;
-            border-radius: var(--border-radius-md);
-            padding: 1.5rem;
-            text-align: center;
-            transition: all var(--transition-normal);
-            cursor: pointer;
-        }
-        
-        .service-option:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .service-option.selected {
-            border-color: var(--primary-color);
-            background-color: rgba(255, 94, 58, 0.05);
-        }
-        
-        /* Service icon with wrapper and background like in services section */
-        .service-icon-wrapper {
-            position: relative;
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 1.25rem;
-        }
-        
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border-radius: var(--border-radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.75rem;
-            position: relative;
-            z-index: 2;
-            margin: 0 auto;
-        }
-        
-        .service-icon-bg {
-            position: absolute;
-            top: -6px;
-            left: 6px;
-            width: 70px;
-            height: 70px;
-            border-radius: var(--border-radius-md);
-            background: var(--primary-light);
-            z-index: 1;
-            opacity: 0.3;
-            transition: all var(--transition-normal);
-        }
-        
-        .service-option:hover .service-icon-bg {
-            transform: translate(4px, -4px);
-        }
-        
-        .service-name {
-            font-weight: 600;
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--secondary-dark);
-        }
-        
-        .service-description {
-            font-size: 0.9rem;
-            color: var(--gray);
-            line-height: 1.4;
-        }
-        
-        .time-slots {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .time-slot {
-            padding: 0.75rem;
-            border: 1px solid var(--medium-gray);
-            border-radius: var(--border-radius-sm);
-            text-align: center;
-            cursor: pointer;
-            transition: all var(--transition-normal);
-        }
-        
-        .time-slot:hover {
-            background-color: var(--light-gray);
-        }
-        
-        .time-slot.selected {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border-color: var(--primary-color);
-        }
-        
-        .booking-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-        }
-        
-        .success-message {
-            text-align: center;
-            padding: 3rem 1rem;
-        }
-        
-        .success-icon {
-            font-size: 5rem;
-            color: var(--accent-green);
-            margin-bottom: 2rem;
-        }
-        
-        .calendar-wrapper {
-            margin-bottom: 2rem;
-        }
-        
-        /* Form styling */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--medium-gray);
-            border-radius: var(--border-radius-md);
-            font-family: var(--font-primary);
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(255, 94, 58, 0.1);
-        }
-        
-        .checkbox-wrapper {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-        
-        .checkbox-wrapper input {
-            width: auto;
-            margin-top: 0.25rem;
-        }
-        
-        /* Flatpickr customization */
-        .flatpickr-input {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--medium-gray);
-            border-radius: var(--border-radius-md);
-            width: 100%;
-            font-family: var(--font-primary);
-        }
-        
-        .flatpickr-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(255, 94, 58, 0.1);
-        }
-        
-        .booking-details {
-            background-color: var(--light-gray);
-            border-radius: var(--border-radius-md);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            text-align: left;
-        }
-        
-        .detail-item {
-            display: flex;
-            margin-bottom: 0.75rem;
-        }
-        
-        .detail-label {
-            font-weight: 600;
-            width: 100px;
-        }
-        
-        .next-steps {
-            margin-bottom: 2rem;
-        }
-        
-        /* FAQ section styling */
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .faq-item {
-            border: 1px solid var(--medium-gray);
-            border-radius: var(--border-radius-md);
-            overflow: hidden;
-        }
-        
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem;
-            cursor: pointer;
-            background-color: var(--white);
-        }
-        
-        .faq-question h4 {
-            margin-bottom: 0;
-            font-size: 1.1rem;
-        }
-        
-        .faq-icon {
-            color: var(--primary-color);
-        }
-        
-        .faq-answer {
-            padding: 0 1.25rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height var(--transition-normal);
-        }
-        
-        .faq-item.active .faq-answer {
-            padding: 0 1.25rem 1.25rem;
-        }
-        
-        .centered-testimonial {
-            max-width: 800px;
-            margin: 3rem auto 0;
-        }
-        
-        @media (max-width: 991px) {
-            .booking-container {
-                padding: 2rem;
-            }
-            
-            .service-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .time-slots {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .faq-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 767px) {
-            .booking-steps {
-                margin-bottom: 2rem;
-            }
-            
-            .step-label {
-                font-size: 0.8rem;
-            }
-            
-            .service-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .time-slots {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .booking-navigation {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .booking-navigation button {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
     
@@ -492,7 +44,7 @@
                 <div class="nav-wrapper">
                     <div class="logo">
                         <a href="../index.html" class="logo-link">
-                            <img src="../assets/images/logo/logo.svg" alt="Digital Nexus" class="logo-img">
+                            <img src="../assets/images/logo/logo.svg" alt="Digital Nexus Logo" class="logo-img">
                             <span class="logo-text">Digital<span class="accent">Nexus</span></span>
                         </a>
                     </div>
@@ -502,18 +54,13 @@
                             <li><a href="../index.html" class="nav-link">Home</a></li>
                             <li><a href="../About/index.html" class="nav-link">About</a></li>
                             <li><a href="../Services/index.html" class="nav-link">Services</a></li>
-                            <li><a href="../index.html#portfolio" class="nav-link">Portfolio</a></li>
-                            <li><a href="../index.html#testimonials" class="nav-link">Testimonials</a></li>
                             <li><a href="../Careers/index.html" class="nav-link">Careers</a></li>
                             <li><a href="../Contact/index.html" class="nav-link">Contact</a></li>
                         </ul>
-                        <div class="nav-cta-mobile">
-                            <a href="../Book-Appointment/index.html" class="btn btn-primary">Book Consultation</a>
-                        </div>
                     </div>
                     
                     <div class="nav-actions">
-                        <a href="../Book-Appointment/index.html" class="btn btn-primary nav-cta active">
+                        <a href="index.html" class="btn btn-primary nav-cta active">
                             <i class="fas fa-calendar-check"></i>
                             Book Consultation
                         </a>
@@ -528,713 +75,298 @@
         </nav>
     </header>
 
-    <!-- Page Header -->
-    <section class="page-header bg-gradient">
-        <div class="page-header-bg">
-            <div class="page-header-shape-1"></div>
-            <div class="page-header-shape-2"></div>
-            <div class="page-header-particles"></div>
-        </div>
-        <div class="container">
-            <div class="page-header-content">
-                <h1 class="page-title animate-fade-up">Book Your Free Strategy Session</h1>
-                <p class="page-description animate-fade-up-delay">Schedule a 30-minute consultation with our digital experts and discover how we can help you achieve your business goals.</p>
-                <div class="breadcrumbs animate-fade-up-delay-2">
-                    <ul class="breadcrumb-list">
-                        <li><a href="../index.html">Home</a></li>
-                        <li><span>Book Consultation</span></li>
-                    </ul>
+    <main>
+        <!-- Page Header -->
+        <section class="page-header bg-gradient">
+            <div class="container">
+                <div class="page-header-content">
+                    <h1 class="page-title animate-fade-up">Book Your Free Strategy Session</h1>
+                    <p class="page-description animate-fade-up-delay">Schedule a 30-minute consultation with our digital experts and discover how we can help you achieve your business goals.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Booking Section -->
-    <section class="booking-section section-padding">
-        <div class="container">
-            <div class="booking-container">
-                <div class="booking-steps">
-                    <div class="booking-step">
-                        <div class="step-number active">1</div>
-                        <div class="step-label active">Select Service</div>
-                    </div>
-                    <div class="booking-step">
-                        <div class="step-number">2</div>
-                        <div class="step-label">Choose Date & Time</div>
-                    </div>
-                    <div class="booking-step">
-                        <div class="step-number">3</div>
-                        <div class="step-label">Your Information</div>
-                    </div>
-                </div>
-                
-                <form id="bookingForm" class="booking-form">
-                    <!-- Step 1: Select Service -->
-                    <div class="booking-form-step active" id="step1">
-                        <h3>Select a Service</h3>
-                        <p class="step-description">Choose the service you're most interested in discussing. Our experts will tailor the consultation to your specific needs.</p>
-                        
-                        <div class="service-options">
-                            <div class="service-option" data-service="seo">
-                                <div class="service-icon-wrapper">
-                                    <div class="service-icon">
-                                        <i class="fas fa-search"></i>
-                                    </div>
-                                    <div class="service-icon-bg"></div>
-                                </div>
-                                <h4 class="service-name">SEO Strategy</h4>
-                                <p class="service-description">Improve your organic search visibility and rankings</p>
-                            </div>
-                            
-                            <div class="service-option" data-service="ppc">
-                                <div class="service-icon-wrapper">
-                                    <div class="service-icon">
-                                        <i class="fas fa-ad"></i>
-                                    </div>
-                                    <div class="service-icon-bg"></div>
-                                </div>
-                                <h4 class="service-name">PPC Advertising</h4>
-                                <p class="service-description">Drive qualified traffic and leads with paid campaigns</p>
-                            </div>
-                            
-                            <div class="service-option" data-service="social">
-                                <div class="service-icon-wrapper">
-                                    <div class="service-icon">
-                                        <i class="fas fa-hashtag"></i>
-                                    </div>
-                                    <div class="service-icon-bg"></div>
-                                </div>
-                                <h4 class="service-name">Social Media</h4>
-                                <p class="service-description">Engage your audience and build brand awareness</p>
-                            </div>
-                            
-                            <div class="service-option" data-service="web">
-                                <div class="service-icon-wrapper">
-                                    <div class="service-icon">
-                                        <i class="fas fa-code"></i>
-                                    </div>
-                                    <div class="service-icon-bg"></div>
-                                </div>
-                                <h4 class="service-name">Web Development</h4>
-                                <p class="service-description">Create a high-performance website or application</p>
-                            </div>
-                            
-                            <div class="service-option" data-service="security">
-                                <div class="service-icon-wrapper">
-                                    <div class="service-icon">
-                                        <i class="fas fa-shield-alt"></i>
-                                    </div>
-                                    <div class="service-icon-bg"></div>
-                                </div>
-                                <h4 class="service-name">Cyber Security</h4>
-                                <p class="service-description">Protect your digital assets from threats</p>
-                            </div>
-                            
-                            <div class="service-option" data-service="all">
-                                <div class="service-icon-wrapper">
-                                    <div class="service-icon">
-                                        <i class="fas fa-cube"></i>
-                                    </div>
-                                    <div class="service-icon-bg"></div>
-                                </div>
-                                <h4 class="service-name">Full Digital Strategy</h4>
-                                <p class="service-description">Comprehensive digital marketing and technology plan</p>
-                            </div>
+        <!-- Booking Section -->
+        <section class="booking-section section-padding">
+            <div class="container">
+                <div class="booking-container">
+                    <div class="booking-steps">
+                        <div class="booking-step" data-step-id="1">
+                            <div class="step-number active">1</div>
+                            <div class="step-label active">Select Service</div>
                         </div>
-                        
-                        <input type="hidden" id="selectedService" name="service" required>
-                        
-                        <div class="booking-navigation">
-                            <div></div> <!-- Empty div for flex spacing -->
-                            <button type="button" class="btn btn-primary next-step" data-step="1" disabled>
-                                Continue to Select Date
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
+                        <div class="booking-step" data-step-id="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Choose Date & Time</div>
+                        </div>
+                        <div class="booking-step" data-step-id="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Your Information</div>
                         </div>
                     </div>
                     
-                    <!-- Step 2: Choose Date & Time -->
-                    <div class="booking-form-step" id="step2">
-                        <h3>Select Your Preferred Date & Time</h3>
-                        <p class="step-description">Choose a day and time that works best for your 30-minute consultation. All times are in Pacific Time (PT).</p>
-                        
-                        <div class="calendar-wrapper">
-                            <input type="text" id="datepicker" name="date" class="flatpickr" placeholder="Select a date" required>
+                    <form id="bookingForm" class="booking-form" novalidate>
+                        <!-- Step 1: Select Service -->
+                        <div class="booking-form-step active" id="step1">
+                            <h3>What service are you interested in?</h3>
+                            <p class="step-description">This helps us assign the right expert for your consultation.</p>
+                            <div class="service-options">
+                                <div class="service-option" data-service="SEO Strategy" data-value="seo"><div class="service-icon"><i class="fas fa-search"></i></div><h4>SEO Strategy</h4></div>
+                                <div class="service-option" data-service="PPC Advertising" data-value="ppc"><div class="service-icon"><i class="fas fa-ad"></i></div><h4>PPC Advertising</h4></div>
+                                <div class="service-option" data-service="Web Development" data-value="web"><div class="service-icon"><i class="fas fa-code"></i></div><h4>Web Development</h4></div>
+                                <div class="service-option" data-service="Cyber Security" data-value="security"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><h4>Cyber Security</h4></div>
+                                <div class="service-option" data-service="Full Digital Strategy" data-value="all"><div class="service-icon"><i class="fas fa-cube"></i></div><h4>Full Digital Strategy</h4></div>
+                            </div>
+                            <input type="hidden" id="selectedService" name="service" required>
+                            <div class="booking-navigation"><button type="button" class="btn btn-primary next-step" disabled>Continue <i class="fas fa-arrow-right"></i></button></div>
                         </div>
                         
-                        <h4>Available Time Slots</h4>
-                        <div class="time-slots" id="timeSlots">
-                            <p class="no-slots-message">Please select a date to see available time slots.</p>
+                        <!-- Step 2: Choose Date & Time -->
+                        <div class="booking-form-step" id="step2">
+                            <h3>Select a Date & Time</h3>
+                            <p class="step-description">Choose a time that works best for your 30-minute session (Pacific Time).</p>
+                            <div class="calendar-wrapper"><input type="text" id="datepicker" name="date" class="flatpickr" placeholder="Select a date" required></div>
+                            <h4>Available Times</h4>
+                            <div class="time-slots" id="timeSlots"><p>Please select a date to see available time slots.</p></div>
+                            <input type="hidden" id="selectedTime" name="time" required>
+                            <div class="booking-navigation"><button type="button" class="btn btn-outline prev-step"><i class="fas fa-arrow-left"></i> Back</button><button type="button" class="btn btn-primary next-step" disabled>Continue <i class="fas fa-arrow-right"></i></button></div>
                         </div>
                         
-                        <input type="hidden" id="selectedTime" name="time" required>
-                        
-                        <div class="booking-navigation">
-                            <button type="button" class="btn btn-outline prev-step" data-step="2">
-                                <i class="fas fa-arrow-left"></i>
-                                Back to Services
-                            </button>
-                            <button type="button" class="btn btn-primary next-step" data-step="2" disabled>
-                                Continue to Your Details
-                                <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3: Your Information -->
-                    <div class="booking-form-step" id="step3">
-                        <h3>Your Information</h3>
-                        <p class="step-description">Please provide your contact details so we can confirm your appointment and prepare for our consultation.</p>
-                        
-                        <div class="form-group">
-                            <label for="name">Full Name *</label>
-                            <input type="text" id="name" name="name" required>
+                        <!-- Step 3: Your Information -->
+                        <div class="booking-form-step" id="step3">
+                            <h3>Confirm Your Details</h3>
+                            <p class="step-description">Please provide your contact info so we can confirm your appointment.</p>
+                            <div class="form-group-grid">
+                                <div class="form-group"><label for="name">Full Name</label><input type="text" id="name" name="name" required></div>
+                                <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required></div>
+                                <div class="form-group"><label for="company">Company Name</label><input type="text" id="company" name="company"></div>
+                                <div class="form-group"><label for="website">Website URL</label><input type="url" id="website" name="website" placeholder="https://example.com"></div>
+                            </div>
+                            <div class="booking-navigation"><button type="button" class="btn btn-outline prev-step"><i class="fas fa-arrow-left"></i> Back</button><button type="submit" class="btn btn-primary">Confirm Booking <i class="fas fa-check"></i></button></div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="company">Company Name</label>
-                            <input type="text" id="company" name="company">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="website">Website URL</label>
-                            <input type="url" id="website" name="website" placeholder="https://example.com">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">What would you like to discuss in our consultation?</label>
-                            <textarea id="message" name="message" rows="4" placeholder="Please share your goals, challenges, or specific questions you'd like to address during our call."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <div class="checkbox-wrapper">
-                                <input type="checkbox" id="terms" name="terms" required>
-                                <label for="terms">I agree to the <a href="#">terms and conditions</a> and <a href="#">privacy policy</a>.</label>
+                        <!-- Step 4: Success Message -->
+                        <div class="booking-form-step" id="step4">
+                            <div class="success-message">
+                                <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                                <h2>Booking Confirmed!</h2>
+                                <p>Your consultation is scheduled. We've sent a confirmation and a calendar invite to your email.</p>
+                                <div class="booking-details">
+                                    <p><strong>Service:</strong> <span id="confirmService"></span></p>
+                                    <p><strong>Date & Time:</strong> <span id="confirmDateTime"></span></p>
+                                </div>
+                                <a href="../index.html" class="btn btn-primary">Return to Homepage <i class="fas fa-home"></i></a>
                             </div>
                         </div>
-                        
-                        <div class="booking-navigation">
-                            <button type="button" class="btn btn-outline prev-step" data-step="3">
-                                <i class="fas fa-arrow-left"></i>
-                                Back to Date & Time
-                            </button>
-                            <button type="submit" class="btn btn-primary">
-                                Confirm Booking
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Success Message (initially hidden) -->
-                    <div class="booking-form-step" id="success">
-                        <div class="success-message">
-                            <div class="success-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h2>Booking Confirmed!</h2>
-                            <p>Your consultation has been successfully scheduled. We've sent a confirmation email to your inbox with all the details.</p>
-                            <div class="booking-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Service:</span>
-                                    <span class="detail-value" id="confirmService"></span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Date:</span>
-                                    <span class="detail-value" id="confirmDate"></span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Time:</span>
-                                    <span class="detail-value" id="confirmTime"></span>
-                                </div>
-                            </div>
-                            <p class="next-steps">What's next? One of our experts will join the call at your scheduled time. Please check your email for calendar invitations and meeting links.</p>
-                            <a href="../index.html" class="btn btn-primary">
-                                Return to Homepage
-                                <i class="fas fa-home"></i>
-                            </a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Book Section -->
-    <section class="why-book section-padding bg-light">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Why Book With Us</span>
-                <h2 class="section-title">
-                    What to Expect From Your <span class="text-gradient">Strategy Session</span>
-                </h2>
-                <p class="section-description">
-                    Our free 30-minute consultations are designed to provide immediate value and actionable insights
-                </p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-box" data-aos="fade-up">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h4>Expert Consultation</h4>
-                    <p>You'll speak directly with senior specialists who have years of experience in your specific industry and challenges.</p>
-                </div>
-
-                <div class="feature-box" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h4>Situation Analysis</h4>
-                    <p>We'll review your current digital presence and identify key opportunities for improvement and growth.</p>
-                </div>
-
-                <div class="feature-box" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h4>Strategic Recommendations</h4>
-                    <p>You'll receive actionable advice you can implement immediately, regardless of whether you choose to work with us.</p>
-                </div>
-
-                <div class="feature-box" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-icon">
-                        <i class="fas fa-route"></i>
-                    </div>
-                    <h4>Custom Roadmap</h4>
-                    <p>We'll outline potential next steps and a strategic approach tailored to your specific goals and budget.</p>
+                    </form>
                 </div>
             </div>
-            
-            <div class="testimonial-card centered-testimonial" data-aos="fade-up">
-                <div class="testimonial-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="testimonial-text">
-                    "I was skeptical about a 'free consultation,' but I was blown away by the value Digital Nexus provided. In just 30 minutes, they uncovered critical issues with our website and gave us practical solutions that we implemented right away. We've seen a 40% increase in conversions since making those changes."
-                </div>
-                <div class="testimonial-author">
-                    <img src="../assets/images/testimonials/client-4.jpg" alt="Author">
-                    <div class="author-info">
-                        <h5>Robert Taylor</h5>
-                        <p>Marketing Director, Horizon Solutions</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq section-padding">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">FAQ</span>
-                <h2 class="section-title">
-                    Frequently Asked <span class="text-gradient">Questions</span>
-                </h2>
-                <p class="section-description">
-                    Everything you need to know about our consultation process
-                </p>
-            </div>
-            
-            <div class="faq-grid">
-                <div class="faq-item" data-aos="fade-up">
-                    <div class="faq-question">
-                        <h4>Is the consultation really free?</h4>
-                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, your 30-minute strategy session is completely free with no obligations. We believe in demonstrating our expertise and providing value upfront.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                    <div class="faq-question">
-                        <h4>How should I prepare for the consultation?</h4>
-                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>To get the most value, consider your primary digital marketing goals, challenges you're facing, and any specific questions you'd like addressed. Having access to your current analytics or campaign data can also be helpful, but it's not required.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="faq-question">
-                        <h4>Who will I be speaking with?</h4>
-                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>You'll be connected with a senior specialist who has expertise in your specific area of interest. All our consultants have at least 5 years of experience in their respective fields.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
-                    <div class="faq-question">
-                        <h4>How is the consultation conducted?</h4>
-                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Consultations are conducted via Zoom video conference. After booking, you'll receive a confirmation email with the meeting link and calendar invitation. You'll also receive a reminder email 24 hours before your scheduled time.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
-                    <div class="faq-question">
-                        <h4>What happens after the consultation?</h4>
-                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>After the call, we'll send you a summary of our discussion, including key takeaways and recommended next steps. If there's a good fit for working together, we'll include a proposal outlining potential options. However, there's never any pressure or obligation to move forward.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" data-aos="fade-up" data-aos-delay="500">
-                    <div class="faq-question">
-                        <h4>Can I reschedule if needed?</h4>
-                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, you can reschedule your appointment up to 4 hours before the scheduled time. Simply click the reschedule link in your confirmation email, or contact us at support@digitalnexus.com.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-info">
-                        <div class="footer-logo">
-                            <img src="../assets/images/logo/logo-white.svg" alt="Digital Nexus">
-                            <span class="logo-text">Digital<span class="accent">Nexus</span></span>
-                        </div>
-                        <p class="footer-description">
-                            We're a full-service digital agency dedicated to helping businesses grow 
-                            through strategic, data-driven solutions.
-                        </p>
-                        <div class="footer-social">
-                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                    
-                    <div class="footer-links">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            <li><a href="../index.html">Home</a></li>
-                            <li><a href="../About/index.html">About Us</a></li>
-                            <li><a href="../Services/index.html">Services</a></li>
-                            <li><a href="../index.html#portfolio">Portfolio</a></li>
-                            <li><a href="../Careers/index.html">Careers</a></li>
-                            <li><a href="../Contact/index.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-links">
-                        <h4>Our Services</h4>
-                        <ul>
-                            <li><a href="../Services/index.html#web">Web App Development</a></li>
-                            <li><a href="../Services/index.html#cybersecurity">Cyber Security</a></li>
-                            <li><a href="../Services/index.html#seo">Digital Marketing</a></li>
-                            <li><a href="../Services/index.html#ppc">Pay-Per-Click Advertising</a></li>
-                            <li><a href="../Services/index.html#social">Social Media Marketing</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div class="footer-contact">
-                        <h4>Contact Us</h4>
-                        <ul>
-                            <li>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>123 Digital Avenue, Suite 500<br>San Francisco, CA 94105</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-phone-alt"></i>
-                                <span>(415) 555-1234</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-envelope"></i>
-                                <span>info@digitalnexus.com</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-clock"></i>
-                                <span>Mon-Fri: 9am-6pm PST</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <div class="container"><div class="footer-grid"><div class="footer-info"><div class="footer-logo"><a href="../index.html" class="logo-link"><img src="../assets/images/logo/logo-white.svg" alt="Digital Nexus Logo"><span class="logo-text">Digital<span class="accent">Nexus</span></span></a></div><p class="footer-description">We're a full-service digital agency dedicated to helping businesses grow through strategic, data-driven solutions.</p><div class="footer-social"><a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></div></div><div class="footer-links"><h4>Quick Links</h4><ul><li><a href="../index.html">Home</a></li><li><a href="../About/index.html">About Us</a></li><li><a href="../Services/index.html">Services</a></li><li><a href="../Careers/index.html">Careers</a></li><li><a href="../Contact/index.html">Contact</a></li></ul></div><div class="footer-links"><h4>Our Services</h4><ul><li><a href="../Services/index.html#web">Web Development</a></li><li><a href="../Services/index.html#seo">SEO</a></li><li><a href="../Services/index.html#ppc">PPC Advertising</a></li></ul></div><div class="footer-contact"><h4>Contact Us</h4><ul><li><i class="fas fa-map-marker-alt"></i><span>123 Digital Avenue, San Francisco, CA</span></li><li><i class="fas fa-phone-alt"></i><span>(415) 555-1234</span></li><li><i class="fas fa-envelope"></i><span>info@digitalnexus.com</span></li></ul></div></div></div>
         </div>
-        
         <div class="footer-bottom">
-            <div class="container">
-                <div class="footer-bottom-content">
-                    <div class="copyright">
-                        <p>© 2023 Digital Nexus. All Rights Reserved.</p>
-                    </div>
-                    <div class="footer-bottom-links">
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
+            <div class="container"><div class="footer-bottom-content"><div class="copyright"><p>© <span id="currentYear"></span> Digital Nexus. All Rights Reserved.</p></div><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div></div>
         </div>
-        
-        <!-- Scroll to Top Button -->
-        <button id="scrollToTop" class="scroll-top-btn">
-            <i class="fas fa-arrow-up"></i>
-        </button>
     </footer>
-
-    <!-- Cookie Consent -->
-    <div class="cookie-consent" id="cookieConsent">
-        <div class="cookie-content">
-            <p>
-                We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.
-                <a href="#">More info</a>
-            </p>
-            <div class="cookie-buttons">
-                <button class="btn btn-outline-light btn-sm" id="cookieSettings">Cookie Settings</button>
-                <button class="btn btn-light btn-sm" id="cookieAccept">Accept All</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/animations.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     
-    <!-- Booking Form Script -->
+    <button id="scrollToTop" class="scroll-top-btn" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+    <div class="cookie-consent" id="cookieConsent" role="dialog" aria-describedby="cookie-description"><div class="cookie-content"><p id="cookie-description">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies. <a href="#">More info</a></p><div class="cookie-buttons"><button class="btn btn-light btn-sm" id="cookieAccept">Accept All</button></div></div></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Service selection
-            const serviceOptions = document.querySelectorAll('.service-option');
-            const selectedServiceInput = document.getElementById('selectedService');
-            const step1NextBtn = document.querySelector('button[data-step="1"]');
-            
-            serviceOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remove selected class from all options
-                    serviceOptions.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // Add selected class to clicked option
-                    this.classList.add('selected');
-                    
-                    // Set hidden input value
-                    selectedServiceInput.value = this.getAttribute('data-service');
-                    
-                    // Enable next button
-                    step1NextBtn.disabled = false;
-                });
-            });
-            
-            // Date picker initialization
-            const datePicker = flatpickr("#datepicker", {
-                minDate: "today",
-                maxDate: new Date().fp_incr(30), // Allow booking up to 30 days in advance
-                disable: [
-                    function(date) {
-                        // Disable weekends
-                        return (date.getDay() === 0 || date.getDay() === 6);
-                    }
-                ],
-                onChange: function(selectedDates, dateStr) {
-                    // Generate time slots for selected date
-                    generateTimeSlots(dateStr);
-                }
-            });
-            
-            // Time slot generation and selection
-            const timeSlotsContainer = document.getElementById('timeSlots');
-            const selectedTimeInput = document.getElementById('selectedTime');
-            const step2NextBtn = document.querySelector('button[data-step="2"]');
-            
-            function generateTimeSlots(date) {
-                // In a real application, you would fetch available time slots from your backend
-                // For this example, we'll generate some sample time slots
-                const timeSlots = [
-                    "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM",
-                    "11:00 AM", "11:30 AM", "1:00 PM", "1:30 PM",
-                    "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM",
-                    "4:00 PM", "4:30 PM"
-                ];
-                
-                // Clear any existing time slots
-                timeSlotsContainer.innerHTML = '';
-                
-                // Create time slot elements
-                timeSlots.forEach(time => {
-                    const timeSlot = document.createElement('div');
-                    timeSlot.className = 'time-slot';
-                    timeSlot.textContent = time;
-                    timeSlot.addEventListener('click', function() {
-                        // Remove selected class from all time slots
-                        document.querySelectorAll('.time-slot').forEach(slot => slot.classList.remove('selected'));
-                        
-                        // Add selected class to clicked time slot
-                        this.classList.add('selected');
-                        
-                        // Set hidden input value
-                        selectedTimeInput.value = time;
-                        
-                        // Enable next button
-                        step2NextBtn.disabled = false;
-                    });
-                    
-                    timeSlotsContainer.appendChild(timeSlot);
+    (function() {
+        'use strict';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initPreloader();
+            initNavigationAndScroll();
+            initBookingForm();
+            initCookieConsent();
+            initFooter();
+        });
+
+        const initPreloader = () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                window.addEventListener('load', () => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 500);
                 });
             }
+        };
+
+        const initNavigationAndScroll = () => {
+            const header = document.getElementById('header');
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const scrollTopBtn = document.getElementById('scrollToTop');
+            if (!header) return;
+
+            let isTicking = false;
+            const handleScroll = () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+                if (scrollTopBtn) scrollTopBtn.classList.toggle('active', window.scrollY > 500);
+                isTicking = false;
+            };
+            window.addEventListener('scroll', () => { if (!isTicking) { window.requestAnimationFrame(handleScroll); isTicking = true; } });
+            if (navToggle && navMenu) { navToggle.addEventListener('click', () => { navMenu.classList.toggle('active'); navToggle.classList.toggle('active'); document.body.classList.toggle('no-scroll'); }); }
+            if (scrollTopBtn) { scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); }
+        };
+
+        const initBookingForm = () => {
+            const form = document.getElementById('bookingForm');
+            if (!form) return;
+
+            let currentStep = 1;
+            const steps = form.querySelectorAll('.booking-form-step');
+            const stepIndicators = document.querySelectorAll('.booking-step');
             
-            // Navigation between steps
-            const nextButtons = document.querySelectorAll('.next-step');
-            const prevButtons = document.querySelectorAll('.prev-step');
-            const steps = document.querySelectorAll('.booking-form-step');
-            const stepNumbers = document.querySelectorAll('.step-number');
-            const stepLabels = document.querySelectorAll('.step-label');
-            
-            nextButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const currentStep = parseInt(this.getAttribute('data-step'));
-                    const nextStep = currentStep + 1;
-                    
-                    // Hide current step
-                    document.getElementById(`step${currentStep}`).classList.remove('active');
-                    
-                    // Show next step
-                    document.getElementById(`step${nextStep}`).classList.add('active');
-                    
-                    // Update step indicators
-                    stepNumbers[currentStep - 1].classList.remove('active');
-                    stepNumbers[currentStep - 1].classList.add('completed');
-                    stepNumbers[nextStep - 1].classList.add('active');
-                    
-                    stepLabels[currentStep - 1].classList.remove('active');
-                    stepLabels[currentStep - 1].classList.add('completed');
-                    stepLabels[nextStep - 1].classList.add('active');
-                    
-                    // Scroll to top of form
-                    document.querySelector('.booking-container').scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            prevButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const currentStep = parseInt(this.getAttribute('data-step'));
-                    const prevStep = currentStep - 1;
-                    
-                    // Hide current step
-                    document.getElementById(`step${currentStep}`).classList.remove('active');
-                    
-                    // Show previous step
-                    document.getElementById(`step${prevStep}`).classList.add('active');
-                    
-                    // Update step indicators
-                    stepNumbers[currentStep - 1].classList.remove('active');
-                    stepNumbers[prevStep - 1].classList.remove('completed');
-                    stepNumbers[prevStep - 1].classList.add('active');
-                    
-                    stepLabels[currentStep - 1].classList.remove('active');
-                    stepLabels[prevStep - 1].classList.remove('completed');
-                    stepLabels[prevStep - 1].classList.add('active');
-                    
-                    // Scroll to top of form
-                    document.querySelector('.booking-container').scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                });
-            });
-            
-            // Form submission
-            const bookingForm = document.getElementById('bookingForm');
-            
-            bookingForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // In a real application, you would send the form data to your backend
-                // For this example, we'll just show the success message
-                
-                // Get form data for confirmation
-                const serviceName = document.querySelector('.service-option.selected .service-name').textContent;
-                const date = document.getElementById('datepicker').value;
-                const time = document.querySelector('.time-slot.selected').textContent;
-                
-                // Set confirmation details
-                document.getElementById('confirmService').textContent = serviceName;
-                document.getElementById('confirmDate').textContent = date;
-                document.getElementById('confirmTime').textContent = time;
-                
-                // Hide the form step
-                document.getElementById('step3').classList.remove('active');
-                
-                // Show success message
-                document.getElementById('success').classList.add('active');
-                
-                // Update step indicators
-                stepNumbers[2].classList.remove('active');
-                stepNumbers[2].classList.add('completed');
-                
-                stepLabels[2].classList.remove('active');
-                stepLabels[2].classList.add('completed');
-                
-                // Scroll to top of form
-                document.querySelector('.booking-container').scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-            
-            // FAQ accordion functionality
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                const icon = item.querySelector('.faq-icon i');
-                
-                question.addEventListener('click', function() {
-                    // Toggle active class on the item
-                    item.classList.toggle('active');
-                    
-                    // Toggle icon
-                    if (item.classList.contains('active')) {
-                        icon.classList.remove('fa-plus');
-                        icon.classList.add('fa-minus');
-                        answer.style.maxHeight = answer.scrollHeight + 'px';
-                    } else {
-                        icon.classList.remove('fa-minus');
-                        icon.classList.add('fa-plus');
-                        answer.style.maxHeight = '0px';
+            const goToStep = (stepNumber) => {
+                steps.forEach(s => s.classList.remove('active'));
+                form.querySelector(`#step${stepNumber}`).classList.add('active');
+
+                stepIndicators.forEach(ind => {
+                    ind.querySelector('.step-number').classList.remove('active', 'completed');
+                    ind.querySelector('.step-label').classList.remove('active', 'completed');
+                    if(ind.dataset.stepId < stepNumber) {
+                        ind.querySelector('.step-number').classList.add('completed');
+                        ind.querySelector('.step-label').classList.add('completed');
+                    } else if (ind.dataset.stepId == stepNumber) {
+                        ind.querySelector('.step-number').classList.add('active');
+                        ind.querySelector('.step-label').classList.add('active');
                     }
                 });
+                currentStep = stepNumber;
+            };
+
+            // Step 1: Service Selection
+            const serviceOptions = form.querySelector('.service-options');
+            serviceOptions.addEventListener('click', e => {
+                const target = e.target.closest('.service-option');
+                if (!target) return;
+                serviceOptions.querySelector('.selected')?.classList.remove('selected');
+                target.classList.add('selected');
+                form.querySelector('#selectedService').value = target.dataset.value;
+                form.querySelector('#step1 .next-step').disabled = false;
             });
-        });
+            
+            // Step 2: Date & Time
+            flatpickr("#datepicker", {
+                minDate: "today",
+                disable: [(date) => (date.getDay() === 0 || date.getDay() === 6)],
+                onChange: (selectedDates, dateStr) => {
+                    const timeSlotsContainer = form.querySelector('#timeSlots');
+                    const slots = ["9:00 AM", "10:00 AM", "11:00 AM", "2:00 PM", "3:00 PM"];
+                    timeSlotsContainer.innerHTML = slots.map(slot => `<button type="button" class="time-slot">${slot}</button>`).join('');
+                    form.querySelector('#selectedTime').value = '';
+                    form.querySelector('#step2 .next-step').disabled = true;
+                }
+            });
+
+            form.querySelector('#timeSlots').addEventListener('click', e => {
+                const target = e.target.closest('.time-slot');
+                if(!target) return;
+                form.querySelector('#timeSlots .selected')?.classList.remove('selected');
+                target.classList.add('selected');
+                form.querySelector('#selectedTime').value = target.textContent;
+                form.querySelector('#step2 .next-step').disabled = false;
+            });
+            
+            // Navigation
+            form.addEventListener('click', e => {
+                if (e.target.matches('.next-step')) goToStep(currentStep + 1);
+                if (e.target.matches('.prev-step')) goToStep(currentStep - 1);
+            });
+            
+            // Form Submission
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                let isValid = true;
+                form.querySelectorAll('#step3 [required]').forEach(input => {
+                    input.classList.remove('error');
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('error');
+                    }
+                });
+
+                if (isValid) {
+                    const serviceText = serviceOptions.querySelector('.selected').dataset.service;
+                    const dateTimeText = `${form.querySelector('#datepicker').value} at ${form.querySelector('#selectedTime').value}`;
+                    form.querySelector('#confirmService').textContent = serviceText;
+                    form.querySelector('#confirmDateTime').textContent = dateTimeText;
+                    goToStep(4);
+                }
+            });
+        };
+
+        const initCookieConsent = () => {
+            const banner = document.getElementById('cookieConsent');
+            const acceptBtn = document.getElementById('cookieAccept');
+            if (banner && acceptBtn && !localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => banner.classList.add('active'), 2000);
+            }
+            if (acceptBtn) { acceptBtn.addEventListener('click', () => { localStorage.setItem('cookiesAccepted', 'true'); banner.classList.remove('active'); }); }
+        };
+
+        const initFooter = () => {
+            const yearSpan = document.getElementById('currentYear');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+        };
+    })();
     </script>
+
+    <style>
+        .page-header { padding: 6rem 0; text-align: center; }
+        .page-title { color: var(--white); font-size: 3.5rem; }
+        .page-description { color: rgba(255,255,255,0.9); font-size: 1.25rem; max-width: 800px; margin: 1rem auto 0; }
+        
+        .booking-section { margin-top: -80px; position: relative; z-index: 5; }
+        .booking-container { background: var(--white); padding: 3rem; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-xl); }
+        .booking-steps { display: flex; justify-content: space-between; margin-bottom: 2rem; position: relative; }
+        .booking-steps::before { content: ''; position: absolute; top: 20px; left: 15%; right: 15%; height: 2px; background: var(--medium-gray); z-index: 1; }
+        .booking-step { flex: 1; text-align: center; position: relative; z-index: 2; }
+        .step-number { width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem; background: var(--medium-gray); color: var(--gray); transition: all 0.3s ease; }
+        .step-number.active { background: var(--primary-color); color: var(--white); transform: scale(1.1); }
+        .step-number.completed { background: var(--accent-green); color: var(--white); }
+        .step-label { font-weight: 600; color: var(--gray); }
+        .step-label.active, .step-label.completed { color: var(--secondary-dark); }
+        
+        .booking-form-step { display: none; }
+        .booking-form-step.active { display: block; animation: fadeIn 0.5s ease; }
+        .booking-form-step h3 { text-align: center; margin-bottom: 0.5rem; }
+        .booking-form-step .step-description { text-align: center; color: var(--gray); margin-bottom: 2rem; }
+
+        .service-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .service-option { border: 2px solid var(--medium-gray); padding: 1.5rem; border-radius: var(--border-radius-md); text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .service-option .service-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+        .service-option:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+        .service-option.selected { border-color: var(--primary-color); background: #fff8f6; }
+
+        .flatpickr-input { text-align: center; font-size: 1.2rem; }
+        .time-slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .time-slot { border: 1px solid var(--medium-gray); padding: 0.75rem; border-radius: var(--border-radius-sm); text-align: center; cursor: pointer; transition: all 0.2s ease; }
+        .time-slot:hover { background: var(--light-gray); }
+        .time-slot.selected { background: var(--primary-color); color: var(--white); border-color: var(--primary-color); }
+
+        .booking-navigation { display: flex; justify-content: space-between; margin-top: 2rem; }
+        .booking-navigation .btn { min-width: 150px; }
+
+        .form-group-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .form-group input.error { border-color: #dc3545; }
+        
+        .success-message { text-align: center; padding: 2rem 0; }
+        .success-icon { font-size: 5rem; color: var(--accent-green); margin-bottom: 1.5rem; }
+        .booking-details { background: var(--light-gray); padding: 1.5rem; margin: 2rem 0; border-radius: var(--border-radius-md); text-align: left; max-width: 400px; margin-left:auto; margin-right: auto;}
+        
+        @media (max-width: 767px) { .booking-steps::before { display: none; } .form-group-grid { grid-template-columns: 1fr; } }
+    </style>
+
 </body>
 </html>

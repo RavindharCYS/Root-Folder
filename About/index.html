@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about Digital Nexus, our mission, vision, and the expert team dedicated to driving digital success for businesses worldwide.">
+    <meta name="keywords" content="about us, digital marketing agency, our mission, our team, company values">
+    <meta name="author" content="Digital Nexus">
+    
+    <title>About Us | Digital Nexus - Your Strategic Growth Partner</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    
+    <!-- CSS Files (Uses the updated main.css) -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ========== CSS FIXES & UPDATES for ABOUT PAGE ========== -->
+    <style>
+      /* BUG FIX: Ensure sections with potential decorative overflow don't trap scroll events */
+      .why-us, .team {
+        position: relative;
+        overflow: visible; 
+      }
+      .why-us::before, .team::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          z-index: -1;
+          overflow: hidden; 
+      }
+      /* END BUG FIX */
+
+      /* Page-specific Styles */
+      .page-header { 
+          padding: 8rem 0; 
+          text-align: center;
+          padding-top: 150px; /* Adjust for fixed header */
+      }
+      .page-header-content { position: relative; z-index: 2; }
+      .page-title { color: var(--white); font-size: 3.5rem; }
+      .page-description { color: rgba(255,255,255,0.9); font-size: 1.25rem; max-width: 800px; margin: 1rem auto 1.5rem; }
+      .breadcrumbs ul { display: flex; justify-content: center; gap: 0.5rem; color: rgba(255,255,255,0.8); }
+      .breadcrumbs a { color: var(--white); font-weight: 500; }
+        
+      .about-story-wrapper { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: center; }
+      .about-story-image img { border-radius: var(--border-radius-lg); box-shadow: var(--shadow-xl); }
+      .story-mission-vision { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+      .mission-item { background: var(--light-gray); padding: 1.5rem; border-radius: var(--border-radius-md); border-left: 4px solid var(--primary-color); }
+      .mission-item i { font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem; }
+        
+      .stats-counter-section { color: var(--white); text-align: center; }
+      .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+      .stat-counter-item i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.8; }
+      .stat-counter-item h3 { font-size: 3.5rem; color: var(--white); margin-bottom: 0.5rem; }
+      .stat-counter-item p { font-size: 1.125rem; font-weight: 500; opacity: 0.9; margin-bottom: 0; }
+
+      .careers-cta-wrapper { text-align: center; padding: 3rem; background: var(--white); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-lg); }
+      .careers-cta-icon { font-size: 3rem; color: var(--primary-color); margin-bottom: 1.5rem; }
+
+      /* DESIGN UPDATE for "Our Core Values" icons */
+      .why-us .feature-box { background: var(--white); padding: 2rem; border-radius: var(--border-radius-md); }
+      .why-us .feature-icon-wrapper { position: relative; width: 70px; height: 70px; margin: 0 auto 1.5rem; }
+      .why-us .feature-icon { width: 70px; height: 70px; background-color: var(--primary-color); color: var(--white); border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.75rem; position: relative; z-index: 2; }
+      .why-us .feature-icon-bg { position: absolute; top: -6px; left: 6px; width: 70px; height: 70px; border-radius: var(--border-radius-md); background: var(--primary-light); opacity: 0.3; transition: all .3s ease; z-index: 1; }
+      .why-us .feature-box:hover .feature-icon-bg { transform: translate(4px, -4px); }
+      .why-us .feature-box h4 { color: var(--secondary-color); }
+      .why-us .feature-box p { color: var(--gray); margin-bottom: 0; }
+
+
+      @media (max-width: 991px) { 
+        .about-story-wrapper { grid-template-columns: 1fr; } 
+        .stats-grid { grid-template-columns: 1fr 1fr; gap: 3rem 1rem; }
+        .page-header { padding-top: 120px; }
+      }
+      @media (max-width: 575px) { 
+        .story-mission-vision, .stats-grid { grid-template-columns: 1fr; }
+        .page-title {font-size: 2.5rem;}
+      }
+    </style>
+</head>
+<body class="no-hero-page">
+    
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-wrapper">
+                    <div class="logo">
+                        <a href="../index.html" class="logo-link">
+                            <img src="../assets/images/logo/logo.svg" alt="Digital Nexus Logo" class="logo-img">
+                            <span class="logo-text">Digital<span class="accent">Nexus</span></span>
+                        </a>
+                    </div>
+                    
+                    <div class="nav-menu" id="navMenu">
+                        <ul class="nav-list">
+                            <li><a href="../index.html" class="nav-link">Home</a></li>
+                            <li><a href="index.html" class="nav-link active">About</a></li>
+                            <li><a href="../Services/index.html" class="nav-link">Services</a></li>
+                            <li><a href="../index.html#portfolio" class="nav-link">Portfolio</a></li>
+                            <li><a href="../Careers/index.html" class="nav-link">Careers</a></li>
+                            <li><a href="../Contact/index.html" class="nav-link">Contact</a></li>
+                        </ul>
+                        <div class="nav-cta-mobile">
+                            <a href="../Book-Appointment/index.html" class="btn btn-primary">Book Consultation</a>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-actions">
+                        <a href="../Book-Appointment/index.html" class="btn btn-primary nav-cta">
+                            <i class="fas fa-calendar-check"></i>
+                            Book Consultation
+                        </a>
+                        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header bg-gradient">
+        <div class="container">
+            <div class="page-header-content">
+                <h1 class="page-title animate-fade-up">About Digital Nexus</h1>
+                <p class="page-description animate-fade-up-delay">We are a passionate team of strategists, creators, and innovators dedicated to building the future of digital excellence.</p>
+                <div class="breadcrumbs animate-fade-up-delay-2">
+                    <ul class="breadcrumb-list">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><span>About Us</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="our-story" class="section-padding">
+        <div class="container">
+            <div class="about-story-wrapper">
+                <div class="about-story-image animate-on-scroll">
+                    <img src="../assets/images/about/our-story.jpg" alt="Digital Nexus team collaborating in a modern office">
+                </div>
+                <div class="about-story-content animate-on-scroll">
+                    <span class="section-tag">Our Story</span>
+                    <h2 class="section-title">The Nexus of <span class="text-gradient">Innovation & Results</span></h2>
+                    <p>Founded in 2015, Digital Nexus was born from a shared vision: to create a digital agency that bridges the gap between cutting-edge technology and measurable business outcomes. We saw a landscape filled with agencies that either focused on flashy creative with no substance or data-heavy reports with no real-world impact.</p>
+                    <p>We set out to be different. Our approach is built on a foundation of deep technical expertise, data-driven strategy, and a relentless focus on our clients' success. We are the "nexus" where your vision connects with the digital world to create powerful, lasting growth.</p>
+                    <div class="story-mission-vision">
+                        <div class="mission-item">
+                            <i class="fas fa-bullseye"></i>
+                            <h4>Our Mission</h4>
+                            <p>To empower businesses of all sizes to achieve their full potential through innovative, integrated, and results-oriented digital solutions.</p>
+                        </div>
+                        <div class="mission-item">
+                            <i class="far fa-eye"></i>
+                            <h4>Our Vision</h4>
+                            <p>To be the most trusted and effective digital growth partner for businesses striving for leadership in the digital age.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section id="our-values" class="why-us section-padding bg-light">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Core Values</span>
+                <h2 class="section-title">The Principles That <span class="text-gradient">Guide Us</span></h2>
+                <p class="section-description">Our values are not just words on a page; they are the bedrock of our culture and the standard by which we measure our success.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-box animate-on-scroll">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                        <div class="feature-icon-bg"></div>
+                    </div>
+                    <h4>Innovation</h4>
+                    <p>We are constantly exploring new technologies and strategies to stay ahead of the curve and deliver forward-thinking solutions.</p>
+                </div>
+                <div class="feature-box animate-on-scroll">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon"><i class="fas fa-handshake"></i></div>
+                        <div class="feature-icon-bg"></div>
+                    </div>
+                    <h4>Partnership</h4>
+                    <p>We treat our clients' businesses as our own, fostering collaborative relationships built on trust and mutual success.</p>
+                </div>
+                <div class="feature-box animate-on-scroll">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="feature-icon-bg"></div>
+                    </div>
+                    <h4>Integrity</h4>
+                    <p>We operate with transparency and honesty, providing clear communication and ethical guidance in everything we do.</p>
+                </div>
+                <div class="feature-box animate-on-scroll">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="feature-icon-bg"></div>
+                    </div>
+                    <h4>Results-Driven</h4>
+                    <p>Our focus is on delivering measurable outcomes that drive real business growth and maximize return on investment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Counter Section -->
+    <section id="our-stats" class="stats-counter-section section-padding bg-gradient">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-counter-item animate-on-scroll">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3 class="stat-value" data-count="1200">0</h3>
+                    <p>Projects Completed</p>
+                </div>
+                <div class="stat-counter-item animate-on-scroll">
+                    <i class="fas fa-users"></i>
+                    <h3 class="stat-value" data-count="500">0</h3>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-counter-item animate-on-scroll">
+                    <i class="fas fa-award"></i>
+                    <h3 class="stat-value" data-count="35">0</h3>
+                    <p>Industry Awards</p>
+                </div>
+                <div class="stat-counter-item animate-on-scroll">
+                    <i class="fas fa-mug-hot"></i>
+                    <h3 class="stat-value" data-count="9999">0</h3>
+                    <p>Cups of Coffee</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Team Section -->
+    <section id="meet-the-team" class="team section-padding">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Leadership</span>
+                <h2 class="section-title">The Minds Behind <span class="text-gradient">Our Success</span></h2>
+                <p class="section-description">Our leadership team brings a wealth of experience, passion, and strategic vision to the forefront of every project.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card animate-on-scroll">
+                    <div class="team-image"><img src="../assets/images/team/team-1.jpg" alt="Alexander Wright, Founder & CEO"><div class="team-social"><a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div></div>
+                    <div class="team-info"><h4>Alexander Wright</h4><p class="team-position">Founder & CEO</p></div>
+                </div>
+                <div class="team-card animate-on-scroll">
+                    <div class="team-image"><img src="../assets/images/team/team-2.jpg" alt="Sophia Chen, SEO Director"><div class="team-social"><a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div></div>
+                    <div class="team-info"><h4>Sophia Chen</h4><p class="team-position">SEO Director</p></div>
+                </div>
+                <div class="team-card animate-on-scroll">
+                    <div class="team-image"><img src="../assets/images/team/team-3.jpg" alt="Marcus Johnson, PPC Specialist"><div class="team-social"><a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div></div>
+                    <div class="team-info"><h4>Marcus Johnson</h4><p class="team-position">PPC Specialist</p></div>
+                </div>
+                <div class="team-card animate-on-scroll">
+                    <div class="team-image"><img src="../assets/images/team/team-4.jpg" alt="Olivia Garcia, Creative Director"><div class="team-social"><a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a><a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a></div></div>
+                    <div class="team-info"><h4>Olivia Garcia</h4><p class="team-position">Creative Director</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA to Careers Page -->
+    <section id="join-us-cta" class="section-padding bg-light">
+        <div class="container">
+            <div class="careers-cta-wrapper animate-on-scroll">
+                <div class="careers-cta-icon"><i class="fas fa-briefcase"></i></div>
+                <h2 class="section-title">Want to Join Our Team?</h2>
+                <p>We're always looking for passionate, talented people to become part of the Digital Nexus family. If you're ready to create amazing work and drive real results, we'd love to hear from you.</p>
+                <a href="../Careers/index.html" class="btn btn-primary btn-lg">View Open Positions <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container"><div class="footer-grid"><div class="footer-info"><div class="footer-logo"><a href="../index.html" class="logo-link"><img src="../assets/images/logo/logo-white.svg" alt="Digital Nexus Logo"><span class="logo-text">Digital<span class="accent">Nexus</span></span></a></div><p class="footer-description">We're a full-service digital agency dedicated to helping businesses grow through strategic, data-driven solutions.</p><div class="footer-social"><a href="#" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a><a href="#" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a><a href="#" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></div></div><div class="footer-links"><h4>Quick Links</h4><ul><li><a href="../index.html">Home</a></li><li><a href="index.html">About Us</a></li><li><a href="../Services/index.html">Services</a></li><li><a href="../Careers/index.html">Careers</a></li><li><a href="../Contact/index.html">Contact</a></li></ul></div><div class="footer-links"><h4>Our Services</h4><ul><li><a href="../Services/index.html#web">Web Development</a></li><li><a href="../Services/index.html#seo">SEO</a></li><li><a href="../Services/index.html#ppc">PPC Advertising</a></li></ul></div><div class="footer-contact"><h4>Contact Us</h4><ul><li><i class="fas fa-map-marker-alt"></i><span>123 Digital Avenue, San Francisco, CA</span></li><li><i class="fas fa-phone-alt"></i><span>(415) 555-1234</span></li><li><i class="fas fa-envelope"></i><span>info@digitalnexus.com</span></li></ul></div></div></div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container"><div class="footer-bottom-content"><div class="copyright"><p>© <span id="currentYear"></span> Digital Nexus. All Rights Reserved.</p></div><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div></div></div>
+        </div>
+    </footer>
+
+    <button id="scrollToTop" class="scroll-top-btn" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="cookie-consent" id="cookieConsent" role="dialog" aria-describedby="cookie-description"><div class="cookie-content"><p id="cookie-description">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies. <a href="#">More info</a></p><div class="cookie-buttons"><button class="btn btn-light btn-sm" id="cookieAccept">Accept All</button></div></div></div>
+
+    <script>
+    (function() {
+        'use strict';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const fns = [initPreloader, initNavigation, initSmoothScrolling, initAnimations, initCounters, initCookieConsent, initFooter];
+            fns.forEach(fn => fn());
+        });
+
+        const initPreloader = () => {
+            const el = document.getElementById('preloader');
+            if(el) window.addEventListener('load', () => { el.style.opacity = '0'; setTimeout(() => el.style.display = 'none', 500); });
+        };
+        
+        const initNavigation = () => {
+            const header = document.getElementById('header');
+            if(!header) return;
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+            const scrollTopBtn = document.getElementById('scrollToTop');
+            let isTicking = false;
+        
+            const handleScroll = () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+                if(scrollTopBtn) scrollTopBtn.classList.toggle('active', window.scrollY > 500);
+                isTicking = false;
+            };
+        
+            window.addEventListener('scroll', () => { if (!isTicking) { window.requestAnimationFrame(handleScroll); isTicking = true; } });
+            
+            navToggle?.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            });
+        };
+
+        const initSmoothScrolling = () => {
+            document.getElementById('scrollToTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        };
+        
+        const initAnimations = () => {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(e => {
+                    if(e.isIntersecting){
+                        e.target.style.opacity = '1';
+                        e.target.classList.add('animated', 'visible');
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('[class*="animate-fade"], .animate-on-scroll').forEach(el => {
+                el.style.opacity = '0';
+                observer.observe(el);
+            });
+        };
+
+        const initCounters = () => {
+            const counters = document.querySelectorAll('.stat-value');
+            if (counters.length === 0) return;
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(e => {
+                    if(e.isIntersecting){
+                        const counter = e.target;
+                        const target = parseFloat(counter.dataset.count || '0');
+                        let start = null;
+                        const step = ts => {
+                            if(!start) start = ts;
+                            const progress = Math.min((ts - start) / 2000, 1);
+                            counter.textContent = Math.floor(progress * target);
+                            if(progress < 1) window.requestAnimationFrame(step);
+                            else counter.textContent = target; // Ensure it ends on the exact number
+                        };
+                        window.requestAnimationFrame(step);
+                        obs.unobserve(counter);
+                    }
+                });
+            }, {threshold: 0.8});
+            counters.forEach(c => observer.observe(c));
+        };
+        
+        const initCookieConsent = () => {
+            const banner = document.getElementById('cookieConsent');
+            const btn = document.getElementById('cookieAccept');
+            if(banner && btn && !localStorage.getItem('cookiesAccepted')) setTimeout(()=>banner.classList.add('active'), 2000);
+            if(btn) btn.addEventListener('click', ()=>{localStorage.setItem('cookiesAccepted','true'); banner.classList.remove('active');});
+        };
+
+        const initFooter = () => {
+            const yearSpan = document.getElementById('currentYear');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+        };
+    })();
+    </script>
+</body>
+</html>
