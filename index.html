@@ -45,6 +45,7 @@
         .logo-text-animated {
             display: inline-flex;
             align-items: center;
+            font-size: 24px; /* Increased font size for TzurGlobal */
         }
         .logo-text-animated .char {
             opacity: 0;
@@ -439,50 +440,36 @@
             if (!logoContainer) return;
             const chars = logoContainer.querySelectorAll('.char');
             const cursor = document.getElementById('logoCursor');
-            const tChar = logoContainer.querySelector('[data-char="T"]');
-            const gChar = logoContainer.querySelector('[data-char="G"]');
 
             const typeSpeed = 100; // ms
-            const pauseAfterInitials = 1500; // ms
             const pauseAfterTyping = 3000; // ms
 
             const runAnimationSequence = () => {
-                // 1. Reset state
+                // 1. Reset state: hide all characters and the cursor
                 chars.forEach(char => char.classList.remove('visible'));
                 cursor.classList.remove('visible');
 
-                // 2. Show initials (T and G)
-                setTimeout(() => {
-                    tChar.classList.add('visible');
-                    gChar.classList.add('visible');
-                }, 500);
-
-                // 3. Hide initials and prepare for typing
-                setTimeout(() => {
-                    tChar.classList.remove('visible');
-                    gChar.classList.remove('visible');
-                }, 500 + pauseAfterInitials);
-                
-                // 4. Start typing animation
+                // 2. Start typing animation after a brief pause
                 setTimeout(() => {
                     cursor.classList.add('visible');
+                    // Type out each character in sequence
                     chars.forEach((char, index) => {
                         setTimeout(() => {
                             char.classList.add('visible');
                         }, (index + 1) * typeSpeed);
                     });
 
-                    // 5. Hide cursor and prepare for loop
+                    // 3. After typing is complete, hide the cursor and schedule the next loop
                     const totalTypingTime = chars.length * typeSpeed;
                     setTimeout(() => {
-                        cursor.classList.remove('visible');
+                        cursor.classList.remove('visible'); // Hide cursor after typing is done
 
-                        // 6. Schedule the next loop
+                        // 4. Schedule the next loop. The full text remains visible during this pause.
                         setTimeout(runAnimationSequence, pauseAfterTyping);
 
-                    }, totalTypingTime + 500);
+                    }, totalTypingTime + 500); // Add a small delay after the last letter
 
-                }, 500 + pauseAfterInitials + 500);
+                }, 500); // Initial delay before the animation sequence starts for the loop
             };
             runAnimationSequence();
         };
