@@ -24,6 +24,9 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Add this line before your other stylesheets -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     
@@ -413,6 +416,47 @@
         @media(max-width: 991px) { .service-detail-wrapper, .service-detail-wrapper.reverse { grid-template-columns: 1fr; } .service-detail-sidebar { position: static; margin-top: 2rem; } }
         @media(max-width: 767px) { .service-features { grid-template-columns: 1fr; } }
     </style>
+
+    <!-- ==================================================================== -->
+<!--   CHATBOT LOADER FOR SUBDIRECTORY PAGES (About, Services, etc.)      -->
+<!-- ==================================================================== -->
+
+<!-- Pet Dog Chatbot Container -->
+<div id="chatbot-container"></div>
+
+<!-- ... your other page scripts ... -->
+    
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('chatbot-container');
+        if (container) {
+            // Fetch from '../bot/' (goes UP one level, then into bot)
+            fetch('../bot/index.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Bot HTML not found');
+                    return response.text();
+                })
+                .then(html => {
+                    container.innerHTML = html;
+                    
+                    const botScript = document.createElement('script');
+                    // Load script from '../bot/' (goes UP one level)
+                    botScript.src = '../bot/bot.js';
+                    
+                    botScript.onload = () => {
+                        if (typeof initializeTzurBot === 'function') {
+                            initializeTzurBot();
+                        }
+                    };
+                    document.body.appendChild(botScript);
+                })
+                .catch(error => console.error('Error loading chatbot:', error));
+        }
+    });
+</script>
+
+
+
 
 </body>
 </html>

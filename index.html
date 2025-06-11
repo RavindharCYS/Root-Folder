@@ -1,3 +1,4 @@
+--- START OF FILE index.html ---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +25,9 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Flatpickr for Date Picker (for bot) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <!-- Custom Styles for Fixes -->
     <style>
@@ -364,6 +368,12 @@
     <div class="cookie-consent" id="cookieConsent" role="dialog" aria-describedby="cookie-description">
         <div class="cookie-content"><p id="cookie-description">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies. <a href="#">More info</a></p><div class="cookie-buttons"><button class="btn btn-light btn-sm" id="cookieAccept">Accept All</button></div></div>
     </div>
+    
+    <!-- Pet Dog Chatbot Container -->
+    <div id="chatbot-container"></div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
     (function() {
@@ -428,8 +438,18 @@
             initCookieConsent();
             initFooter();
             initLogoAnimation();
+            initChatbotLoader(); // Add this line
         });
 
+        // Add this new function to load the chatbot
+        const initChatbotLoader = () => {
+            fetch('./bot/index.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('chatbot-container').innerHTML = html;
+                })
+                .catch(error => console.error('Error loading chatbot:', error));
+        };
         /**
          * ------------------------------------------------------------------------
          *  Core Functions
@@ -734,6 +754,39 @@
         };
     })();
     </script>
+
+    
+    <!-- Pet Dog Chatbot Container -->
+    <div id="chatbot-container"></div>
+
+    <!-- Scripts (Flatpickr is no longer needed for the bot) -->
+    <!-- ... your other page scripts ... -->
+    
+    <script>
+        // FINAL CHATBOT LOADER
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('chatbot-container');
+            if (container) {
+                // Fetch and inject the HTML/CSS
+                fetch('./bot/index.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        container.innerHTML = html;
+                        // After HTML is in the DOM, load and execute the bot's JS
+                        const botScript = document.createElement('script');
+                        botScript.src = './bot/bot.js';
+                        botScript.onload = () => {
+                            if (typeof initializeTzurBot === 'function') {
+                                initializeTzurBot();
+                            }
+                        };
+                        document.body.appendChild(botScript);
+                    })
+                    .catch(error => console.error('Error loading chatbot:', error));
+            }
+        });
+    </script>
+</body>
 
 </body>
 </html>
