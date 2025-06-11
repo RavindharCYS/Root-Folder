@@ -446,7 +446,9 @@ input.error, textarea.error, select.error { border-color: red !important; }
 
 /* Add this to the end of assets/css/main.css */
 
-#services.services-overview {
+#services
+
+.services-overview {
     background-image: none;
     background-color: #ffffff; 
 }

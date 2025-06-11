@@ -7,7 +7,7 @@
     <meta name="keywords" content="digital marketing, SEO, PPC, social media marketing, web development, branding, cyber security">
     <meta name="author" content="Tzur Global">
     
-    <title>Tzur Global - Tech Solutions & Digital Marketing</title>
+    <title>Tzur Global | Tech Solutions & Digital Marketing</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
@@ -25,7 +25,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom Styles for Fix -->
+    <!-- Custom Styles for Fixes -->
     <style>
         .services-cta {
             display: flex;
@@ -558,7 +558,6 @@
                 const currentPos = e.touches ? e.touches[0].clientX : e.clientX;
                 currentTranslate = prevTranslate + currentPos - startPos;
                 
-                // *** FIX FOR SCROLLING BUG ***
                 // Only prevent default if it's a clear horizontal swipe
                 const startY = e.touches ? e.touches[0].clientY : e.clientY;
                 if (!isHorizontalSwipe && Math.abs(currentPos-startPos) > 10) {
@@ -582,7 +581,7 @@
             track.addEventListener('mousemove', onPointerMove);
             track.addEventListener('mouseup', onPointerUp);
             track.addEventListener('mouseleave', onPointerUp);
-            track.addEventListener('touchstart', onPointerDown, { passive: true });
+            track.addEventListener('touchstart', onPointerDown);
             track.addEventListener('touchmove', onPointerMove);
             track.addEventListener('touchend', onPointerUp);
 
