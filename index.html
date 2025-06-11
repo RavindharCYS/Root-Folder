@@ -40,6 +40,48 @@
             background-image: none;
             background-color: #ffffff;
         }
+
+        /* --- STYLES FOR LOGO ANIMATION --- */
+        .logo-text-animated {
+            display: inline-flex;
+            align-items: center;
+        }
+        .logo-text-animated .char {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out; /* Animate color change on scroll */
+            font-weight: 800;
+            color: #000000; /* Start as white for visibility on hero section */
+        }
+        .logo-text-animated .char.visible {
+            opacity: 1;
+        }
+        .logo-text-animated .char.accent {
+            color: #f76b06; /* Set 'Global' to be orange */
+        }
+
+        /* Change color of 'Tzur' to black when header is scrolled */
+        .header.scrolled .logo-text-animated .char:not(.accent) {
+            color: #000000;
+        }
+
+        .logo-text-animated .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #f76b06; /* Cursor is orange */
+            opacity: 0;
+            transition: opacity 0.1s;
+            animation: blink 1s step-end infinite;
+        }
+        .logo-text-animated .cursor.visible {
+            opacity: 1;
+        }
+
+        @keyframes blink {
+            from, to { background-color: transparent; }
+            50% { background-color: #ffffff; } /* Blink color is orange */
+        }
+        /* --- END OF LOGO ANIMATION STYLES --- */
     </style>
 </head>
 <body>
@@ -59,7 +101,20 @@
                     <div class="logo">
                         <a href="index.html" class="logo-link">
                             <img src="assets/images/logo/logo.svg" alt="Tzur Global Logo" class="logo-img">
-                            <span class="logo-text">Tzur<span class="accent">Global</span></span>
+                            <!-- Animated logo text structure -->
+                            <span class="logo-text-animated" id="animatedLogo">
+                                <span class="char" data-char="T">T</span>
+                                <span class="char" data-char="z">z</span>
+                                <span class="char" data-char="u">u</span>
+                                <span class="char" data-char="r">r</span>
+                                <span class="char accent" data-char="G">G</span>
+                                <span class="char accent" data-char="l">l</span>
+                                <span class="char accent" data-char="o">o</span>
+                                <span class="char accent" data-char="b">b</span>
+                                <span class="char accent" data-char="a">a</span>
+                                <span class="char accent" data-char="l">l</span>
+                                <span class="cursor" id="logoCursor"></span>
+                            </span>
                         </a>
                     </div>
                     
@@ -371,6 +426,7 @@
             initContactForm();
             initCookieConsent();
             initFooter();
+            initLogoAnimation();
         });
 
         /**
@@ -378,6 +434,59 @@
          *  Core Functions
          * ------------------------------------------------------------------------
          */
+        const initLogoAnimation = () => {
+            const logoContainer = document.getElementById('animatedLogo');
+            if (!logoContainer) return;
+            const chars = logoContainer.querySelectorAll('.char');
+            const cursor = document.getElementById('logoCursor');
+            const tChar = logoContainer.querySelector('[data-char="T"]');
+            const gChar = logoContainer.querySelector('[data-char="G"]');
+
+            const typeSpeed = 100; // ms
+            const pauseAfterInitials = 1500; // ms
+            const pauseAfterTyping = 3000; // ms
+
+            const runAnimationSequence = () => {
+                // 1. Reset state
+                chars.forEach(char => char.classList.remove('visible'));
+                cursor.classList.remove('visible');
+
+                // 2. Show initials (T and G)
+                setTimeout(() => {
+                    tChar.classList.add('visible');
+                    gChar.classList.add('visible');
+                }, 500);
+
+                // 3. Hide initials and prepare for typing
+                setTimeout(() => {
+                    tChar.classList.remove('visible');
+                    gChar.classList.remove('visible');
+                }, 500 + pauseAfterInitials);
+                
+                // 4. Start typing animation
+                setTimeout(() => {
+                    cursor.classList.add('visible');
+                    chars.forEach((char, index) => {
+                        setTimeout(() => {
+                            char.classList.add('visible');
+                        }, (index + 1) * typeSpeed);
+                    });
+
+                    // 5. Hide cursor and prepare for loop
+                    const totalTypingTime = chars.length * typeSpeed;
+                    setTimeout(() => {
+                        cursor.classList.remove('visible');
+
+                        // 6. Schedule the next loop
+                        setTimeout(runAnimationSequence, pauseAfterTyping);
+
+                    }, totalTypingTime + 500);
+
+                }, 500 + pauseAfterInitials + 500);
+            };
+            runAnimationSequence();
+        };
+
         const initPreloader = () => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
@@ -539,7 +648,6 @@
                 const currentPos = e.touches ? e.touches[0].clientX : e.clientX;
                 currentTranslate = prevTranslate + currentPos - startPos;
                 
-                // Only prevent default if it's a clear horizontal swipe
                 const startY = e.touches ? e.touches[0].clientY : e.clientY;
                 if (!isHorizontalSwipe && Math.abs(currentPos-startPos) > 10) {
                      isHorizontalSwipe = Math.abs(currentPos-startPos) > Math.abs(e.clientY-startY);
@@ -554,7 +662,7 @@
                 isHorizontalSwipe = false;
                 const movedBy = currentTranslate - prevTranslate;
                 if (Math.abs(movedBy) > 50) moveSlider(movedBy < 0 ? 1 : -1);
-                else moveSlider(0); // Snap back
+                else moveSlider(0);
                 track.style.transition = '';
             };
             
@@ -594,7 +702,6 @@
                     e.preventDefault(); 
                     createModal(`<div class="video-container"><iframe src="${videoBtn.dataset.video}" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>`); 
                 }
-                // **MODIFICATION**: The logic to handle '.project-link' clicks has been removed.
             });
             const style = document.createElement('style');
             style.textContent = `.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1001;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease}.modal-overlay.closing{animation:fadeOut .3s ease forwards}.modal-content-wrapper{position:relative;background:#fff;border-radius:8px;max-width:900px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.2)}.modal-close-btn{position:absolute;top:10px;right:15px;font-size:2.5rem;color:#fff;background:none;border:none;cursor:pointer;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,0.4)}.video-container{position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;}.video-container iframe{position:absolute;top:0;left:0;width:100%;height:100%}.project-modal-content{display:flex;flex-direction:column;max-height:90vh;overflow:hidden;border-radius:8px;background:#fff}.project-modal-img{width:100%;height:250px;object-fit:cover}@media(min-width:768px){.project-modal-content{flex-direction:row}.project-modal-img{width:40%;height:auto}}.project-modal-text{padding:2rem;overflow-y:auto;color:#333}.no-scroll{overflow:hidden}`;
