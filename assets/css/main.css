@@ -443,6 +443,13 @@ input.error, textarea.error, select.error { border-color: red !important; }
 .cookie-content p { margin-bottom: 1rem; font-size: 0.9375rem; }
 .cookie-buttons { display: flex; justify-content: flex-end; }
 
+
+/* Add this to the end of assets/css/main.css */
+
+#services.services-overview {
+    background-image: none;
+    background-color: #ffffff; 
+}
 /*------------------------------------------------------------------
 [19. Responsive Styles]
 */
