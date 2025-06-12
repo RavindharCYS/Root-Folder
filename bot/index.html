@@ -3,11 +3,19 @@
     /* --- General Widget Styles --- */
     #pet-dog-widget {
         position: fixed;
-        bottom: 20px;
+        bottom: 20px; /* Start at the very bottom of the page */
         right: 20px;
-        z-index: 1010;
+        z-index: 1010; /* Stacking order for the dog widget */
         cursor: pointer;
+        /* Add a smooth transition for the movement when the .raised class is added */
+        transition: bottom 0.3s ease-in-out;
     }
+
+    /* This class is added by bot.js on scroll to move the dog up */
+    #pet-dog-widget.raised {
+        bottom: 90px; /* New position, high enough for the "Back to Top" button */
+    }
+
     #pet-dog-image {
         width: 100px;
         height: auto;
@@ -28,7 +36,6 @@
         box-shadow: var(--shadow-md);
         font-weight: 600;
         white-space: nowrap;
-        /* Animation properties */
         visibility: hidden;
         opacity: 0;
         transform: scale(0.9) translateY(10px);
@@ -45,7 +52,7 @@
         bottom: 140px;
         right: 20px;
         width: 90%;
-        max-width: 380px; /* Slightly wider */
+        max-width: 380px;
         height: 70vh;
         max-height: 600px;
         background-color: var(--light-gray);
@@ -55,7 +62,6 @@
         flex-direction: column;
         overflow: hidden;
         z-index: 1009;
-        /* Animation */
         transform: scale(0.95) translateY(10px);
         opacity: 0;
         visibility: hidden;
@@ -183,42 +189,22 @@
         background-color: var(--primary-color);
         color: white;
     }
-
-    /* ============================ */
-    /* === MOBILE OPTIMIZATIONS === */
-    /* ============================ */
+    /* --- Responsive --- */
     @media (max-width: 480px) {
-        /* Adjust chat window to fit smaller screens */
         #pet-chat-window {
-            left: 10px;
+            bottom: 120px; right: 10px; left: 10px;
+            max-width: none; height: 65vh;
+        }
+        #pet-dog-widget {
             right: 10px;
-            bottom: 120px;
-            width: auto; /* Let left/right positioning determine the width */
-            max-width: none; /* Remove the desktop width constraint */
-            height: 65vh; /* Slightly reduce height */
+            bottom: 10px; /* Start low on mobile */
         }
-        
-        /* Make the dog smaller and reposition it */
-        #pet-dog-widget { 
-            right: 10px; 
-            bottom: 10px; 
+        #pet-dog-widget.raised {
+            bottom: 80px; /* Raise up on mobile scroll */
         }
-        #pet-dog-image { 
-            width: 80px; 
-        }
-
-        /* Reposition the speech bubble for the smaller dog */
-        #pet-dog-bubble { 
-            bottom: 65px; 
-            right: 60px;
-            padding: 6px 12px;
-            font-size: 0.9rem;
-        }
-
-        /* Make the chat options stack vertically */
-        .chat-options-grid {
-            grid-template-columns: 1fr;
-        }
+        #pet-dog-image { width: 80px; }
+        #pet-dog-bubble { bottom: 65px; right: 60px; }
+        .chat-options-grid { grid-template-columns: 1fr; }
     }
 </style>
 

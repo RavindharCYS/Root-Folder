@@ -15,17 +15,14 @@ function initializeTzurBot() {
     const messagesContainer = chatWindow.querySelector('.pet-chat-messages');
     const inputArea = chatWindow.querySelector('.pet-chat-input-area');
     
-    // --- FINAL WORKING SOLUTION ---
-    // The walking GIF remains the same.
+    // --- Image Sources ---
     const walkingGif = "https://images.squarespace-cdn.com/content/v1/5e565a79a627132356d89ef7/52801fe1-73cd-46d0-843d-23e4cb111d47/Dog-Walk.gif";
-    // This is now a STATIC, reliable PNG image to create the "paused" effect.
     const idleImageSrc = "https://images.squarespace-cdn.com/content/v1/5e565a79a627132356d89ef7/52801fe1-73cd-46d0-843d-23e4cb111d47/Dog-Idle.png";
 
-    // Preload the static "idle" image to prevent any flickering on first click.
     const idleImage = new Image();
     idleImage.src = idleImageSrc;
     
-    // --- Conversation Tree (No Changes Needed Here) ---
+    // --- Conversation Tree ---
     const conversation = {
         'start': {
             bot: "Woof! I'm TzurBot, your friendly guide.<br>How can I help you today?",
@@ -68,10 +65,9 @@ function initializeTzurBot() {
         }
     };
     
-    // --- Core Chat Functions (With Updated Image Swapping Logic) ---
+    // --- Core Chat Functions ---
     const toggleChat = (forceState) => {
         const isActive = chatWindow.classList.toggle('active', forceState);
-        // Swap between the walking GIF and the static "idle" PNG.
         petImage.src = isActive ? idleImageSrc : walkingGif;
     };
     
@@ -136,7 +132,7 @@ function initializeTzurBot() {
     }
     
     function runAction(action) {
-        inputArea.innerHTML = ''; // Clear options
+        inputArea.innerHTML = ''; 
         switch(action) {
             case 'closeChat':
                 setTimeout(() => toggleChat(false), 2000);
@@ -149,6 +145,45 @@ function initializeTzurBot() {
 
     // --- Main Initialization & Event Listeners ---
     function init() {
+        // --- LOGIC FOR SCROLLING BEHAVIOR ---
+        const handleScroll = () => {
+            if (window.scrollY > 400) {
+                petWidget.classList.add('raised');
+            } else {
+                petWidget.classList.remove('raised');
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Run on load
+        
+        // ========== START: NEW ROBUST FIX FOR Z-INDEX ==========
+        // This function will wait for the scroll-to-top button to appear and then fix it.
+        const fixButtonZIndex = () => {
+            let attempts = 0;
+            const maxAttempts = 20; // Try for 10 seconds (20 * 500ms)
+            
+            const interval = setInterval(() => {
+                const scrollToTopButton = document.getElementById('scrollToTop');
+                
+                if (scrollToTopButton) {
+                    // Button found! Apply the fix and stop checking.
+                    scrollToTopButton.style.zIndex = '1011';
+                    clearInterval(interval);
+                } else {
+                    // Button not found yet, try again.
+                    attempts++;
+                    if (attempts > maxAttempts) {
+                        // Stop trying after 10 seconds to avoid performance issues.
+                        clearInterval(interval);
+                    }
+                }
+            }, 500); // Check every half second
+        };
+
+        fixButtonZIndex(); // Start checking for the button
+        // ========== END: NEW ROBUST FIX FOR Z-INDEX ==========
+
+        // --- ALL OTHER ORIGINAL LOGIC ---
         setInterval(() => {
             if (!chatWindow.classList.contains('active')) {
                 bubble.classList.add('show');
