@@ -183,15 +183,42 @@
         background-color: var(--primary-color);
         color: white;
     }
-    /* --- Responsive --- */
+
+    /* ============================ */
+    /* === MOBILE OPTIMIZATIONS === */
+    /* ============================ */
     @media (max-width: 480px) {
+        /* Adjust chat window to fit smaller screens */
         #pet-chat-window {
-            bottom: 120px; right: 10px; left: 10px;
-            max-width: none; height: 65vh;
+            left: 10px;
+            right: 10px;
+            bottom: 120px;
+            width: auto; /* Let left/right positioning determine the width */
+            max-width: none; /* Remove the desktop width constraint */
+            height: 65vh; /* Slightly reduce height */
         }
-        #pet-dog-widget { right: 10px; bottom: 10px; }
-        #pet-dog-image { width: 80px; }
-        #pet-dog-bubble { bottom: 65px; right: 60px; }
+        
+        /* Make the dog smaller and reposition it */
+        #pet-dog-widget { 
+            right: 10px; 
+            bottom: 10px; 
+        }
+        #pet-dog-image { 
+            width: 80px; 
+        }
+
+        /* Reposition the speech bubble for the smaller dog */
+        #pet-dog-bubble { 
+            bottom: 65px; 
+            right: 60px;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Make the chat options stack vertically */
+        .chat-options-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 
