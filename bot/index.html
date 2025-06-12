@@ -1,0 +1,237 @@
+<!-- START OF FILE bot/index.html -->
+<style>
+    /* --- General Widget Styles --- */
+    #pet-dog-widget {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1010;
+        cursor: pointer;
+    }
+    #pet-dog-image {
+        width: 100px;
+        height: auto;
+        transition: transform 0.3s ease;
+    }
+    #pet-dog-widget:hover #pet-dog-image {
+        transform: scale(1.1) rotate(-5deg);
+    }
+    #pet-dog-bubble {
+        position: absolute;
+        bottom: 80px;
+        right: 75px;
+        background-color: var(--white);
+        color: var(--secondary-dark);
+        padding: 8px 15px;
+        border-radius: 15px;
+        border-bottom-right-radius: 2px;
+        box-shadow: var(--shadow-md);
+        font-weight: 600;
+        white-space: nowrap;
+        /* Animation properties */
+        visibility: hidden;
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    #pet-dog-bubble.show {
+        visibility: visible;
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    /* --- Main Chat Window Design --- */
+    #pet-chat-window {
+        position: fixed;
+        bottom: 140px;
+        right: 20px;
+        width: 90%;
+        max-width: 380px; /* Slightly wider */
+        height: 70vh;
+        max-height: 600px;
+        background-color: var(--light-gray);
+        border-radius: var(--border-radius-lg);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1009;
+        /* Animation */
+        transform: scale(0.95) translateY(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transform-origin: bottom right;
+    }
+    #pet-chat-window.active {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    /* --- Header Design --- */
+    .pet-chat-header {
+        background: var(--gradient-dark);
+        color: var(--white);
+        padding: 1rem 1.25rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .pet-chat-header #close-pet-chat {
+        font-size: 1.75rem; font-weight: 300; cursor: pointer;
+        opacity: 0.8; line-height: 1; padding: 0 5px;
+        transition: transform 0.2s, opacity 0.2s;
+    }
+    .pet-chat-header #close-pet-chat:hover { opacity: 1; transform: rotate(90deg); }
+    /* --- Messages Area Design --- */
+    .pet-chat-messages {
+        flex-grow: 1; padding: 1.5rem 1rem; overflow-y: auto;
+        display: flex; flex-direction: column; gap: 1rem;
+        background-image: radial-gradient(var(--medium-gray) 1px, transparent 1px);
+        background-size: 15px 15px;
+    }
+    .pet-chat-message {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+        max-width: 90%;
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeInUp 0.4s ease forwards;
+    }
+    .pet-chat-message.bot { align-self: flex-start; }
+    .pet-chat-message.user { align-self: flex-end; flex-direction: row-reverse; }
+    
+    .bot-avatar {
+        width: 36px; height: 36px; border-radius: 50%;
+        background: var(--primary-color); color: white;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.1rem; flex-shrink: 0;
+    }
+    .message-content {
+        padding: 0.75rem 1rem;
+        border-radius: 18px;
+        line-height: 1.5;
+        font-size: 0.9375rem;
+    }
+    .pet-chat-message.bot .message-content {
+        background-color: var(--white);
+        color: var(--secondary-dark);
+        border-bottom-left-radius: 4px;
+        box-shadow: var(--shadow-sm);
+    }
+    .pet-chat-message.user .message-content {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border-bottom-right-radius: 4px;
+    }
+    .message-timestamp {
+        display: block;
+        font-size: 0.75rem;
+        margin-top: 5px;
+        text-align: right;
+        opacity: 0.6;
+    }
+    .pet-chat-message.bot .message-timestamp { text-align: left; }
+    /* Typing indicator */
+    .typing-indicator span {
+        width: 8px; height: 8px; background-color: #b3b3b3; border-radius: 50%;
+        display: inline-block; animation: typing-blink 1.4s infinite both;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: .2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: .4s; }
+    @keyframes typing-blink { 0%, 100% { opacity: .2; } 20% { opacity: 1; } }
+    /* --- Input Area / Options Design --- */
+    .pet-chat-input-area {
+        padding: 1.25rem;
+        border-top: 1px solid var(--medium-gray);
+        background-color: var(--white);
+        flex-shrink: 0;
+    }
+    .chat-options-grid { display: grid; gap: 0.75rem; grid-template-columns: 1fr 1fr; }
+    .chat-option {
+        background: var(--white);
+        border: 1px solid var(--medium-gray);
+        border-radius: var(--border-radius-md);
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .chat-option:hover {
+        border-color: var(--primary-color);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+    }
+    .option-icon {
+        width: 40px; height: 40px; border-radius: 50%;
+        background-color: var(--light-gray);
+        color: var(--primary-color);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+    }
+    .chat-option:hover .option-icon {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    /* ============================ */
+    /* === MOBILE OPTIMIZATIONS === */
+    /* ============================ */
+    @media (max-width: 480px) {
+        /* Adjust chat window to fit smaller screens */
+        #pet-chat-window {
+            left: 10px;
+            right: 10px;
+            bottom: 120px;
+            width: auto; /* Let left/right positioning determine the width */
+            max-width: none; /* Remove the desktop width constraint */
+            height: 65vh; /* Slightly reduce height */
+        }
+        
+        /* Make the dog smaller and reposition it */
+        #pet-dog-widget { 
+            right: 10px; 
+            bottom: 10px; 
+        }
+        #pet-dog-image { 
+            width: 80px; 
+        }
+
+        /* Reposition the speech bubble for the smaller dog */
+        #pet-dog-bubble { 
+            bottom: 65px; 
+            right: 60px;
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Make the chat options stack vertically */
+        .chat-options-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div id="pet-dog-widget">
+    <div id="pet-dog-bubble">Hii!</div>
+    <img id="pet-dog-image" src="https://images.squarespace-cdn.com/content/v1/5e565a79a627132356d89ef7/52801fe1-73cd-46d0-843d-23e4cb111d47/Dog-Walk.gif" alt="Virtual Pet Dog">
+</div>
+
+<div id="pet-chat-window">
+    <div class="pet-chat-header">
+        <span>TzurBot Assistant</span>
+        <span id="close-pet-chat">×</span>
+    </div>
+    <div class="pet-chat-messages"></div>
+    <div class="pet-chat-input-area"></div>
+</div>
