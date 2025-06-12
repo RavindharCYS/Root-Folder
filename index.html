@@ -734,6 +734,42 @@
         };
     })();
     </script>
+    
+    <!-- ==================================================================== -->
+    <!--            CHATBOT LOADER FOR THE MAIN PAGE                        -->
+    <!-- ==================================================================== -->
+
+    <!-- Pet Dog Chatbot Container -->
+    <div id="chatbot-container"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('chatbot-container');
+            if (container) {
+                // Fetch from 'bot/' (relative to the root index.html)
+                fetch('bot/index.html')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Bot HTML not found');
+                        return response.text();
+                    })
+                    .then(html => {
+                        container.innerHTML = html;
+                        
+                        const botScript = document.createElement('script');
+                        // Load script from 'bot/' (relative to the root index.html)
+                        botScript.src = 'bot/bot.js';
+                        
+                        botScript.onload = () => {
+                            if (typeof initializeTzurBot === 'function') {
+                                initializeTzurBot();
+                            }
+                        };
+                        document.body.appendChild(botScript);
+                    })
+                    .catch(error => console.error('Error loading chatbot:', error));
+            }
+        });
+    </script>
 
 </body>
 </html>
