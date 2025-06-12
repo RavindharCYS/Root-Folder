@@ -747,7 +747,7 @@
             const container = document.getElementById('chatbot-container');
             if (container) {
                 // Fetch from 'bot/' (relative to the root index.html)
-                fetch('.bot/index.html')
+                fetch('bot/index.html')
                     .then(response => {
                         if (!response.ok) throw new Error('Bot HTML not found');
                         return response.text();
