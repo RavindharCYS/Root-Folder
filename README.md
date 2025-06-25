@@ -3,8 +3,8 @@
 **Project Name:** Tzur Global Website
 **Version:** 1.1 (Post-Initial Feature Completion)
 **Prepared For:** Tzur Global Stakeholders & Future Development Teams
-**Prepared By:** [Ravindhar V]
-**Date:** [Current Date - June 15 2025]
+**Prepared By:** Ravindhar V
+**Date:** Current Date - June 15 2025
 
 ## Table of Contents
 1.  Executive Summary
